@@ -4,7 +4,7 @@
 
 	<groupId>stsc</groupId>
 	<artifactId>stsc.database.migrations</artifactId>
-	<version>0.0.17-PROSEP</version>
+	<version>0.0.18-WEBINTERFACE</version>
 	<packaging>jar</packaging>
 
 	<name>stsc.database.migrations</name>
@@ -29,97 +29,97 @@
 		</plugins>
 	</build>
 	<profiles>
-        <profile>
-            <id>yahoo.production</id>
+		<profile>
+			<id>yahoo.production</id>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/yahoo_downloader/production.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-        <profile>
-            <id>yahoo.development</id>
+				<filters>
+					<filter>${project.basedir}/../config/yahoo_downloader/production.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>yahoo.development</id>
 			<activation>
-            	<activeByDefault>true</activeByDefault>
-        	</activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/yahoo_downloader/development.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-        <profile>
-            <id>yahoo.test</id>
+				<filters>
+					<filter>${project.basedir}/../config/yahoo_downloader/development.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>yahoo.test</id>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/yahoo_downloader/test.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-        <profile>
-            <id>feedzilla.production</id>
+				<filters>
+					<filter>${project.basedir}/../config/yahoo_downloader/test.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>feedzilla.production</id>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/feedzilla_downloader/production.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-        <profile>
-            <id>feedzilla.development</id>
+				<filters>
+					<filter>${project.basedir}/../config/feedzilla_downloader/production.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>feedzilla.development</id>
 			<activation>
-            	<activeByDefault>true</activeByDefault>
-        	</activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/feedzilla_downloader/development.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-        <profile>
-            <id>feedzilla.test</id>
+				<filters>
+					<filter>${project.basedir}/../config/feedzilla_downloader/development.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>feedzilla.test</id>
 			<build>
-            <filters>
-                <filter>${project.basedir}/../config/feedzilla_downloader/test.properties</filter>
-            </filters>
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <filtering>true</filtering>
-                </resource>
-            </resources>
-        	</build>
-        </profile>
-    </profiles>
+				<filters>
+					<filter>${project.basedir}/../config/feedzilla_downloader/test.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>
