@@ -14,11 +14,15 @@
 		<github.global.server>github</github.global.server>
 	</properties>
 
-        <repositories>
-                <repository>
-                        <id>stsc-bom-repository</id>
-                        <url>https://raw.github.com/sidorovis/stsc/stsc.bom/</url>
-                </repository>
+	<repositories>
+		<repository>
+			<id>maven-central</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>stsc-bom-repository</id>
+			<url>https://raw.github.com/sidorovis/stsc/stsc.bom/</url>
+		</repository>
 		<repository>
 			<id>stsc-common-mvn-repo</id>
 			<url>https://raw.github.com/sidorovis/stsc/stsc.common/</url>
@@ -77,7 +81,8 @@
 				<artifactId>site-maven-plugin</artifactId>
 				<version>0.12</version>
 				<configuration>
-					<message>#2 new version ${project.version} of stsc.database.storage deployed</message>
+					<message>#2 new version ${project.version} of stsc.database.storage
+						deployed</message>
 					<noJekyll>true</noJekyll>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<branch>refs/heads/stsc.database.storage</branch>
