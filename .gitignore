@@ -16,4 +16,4 @@ target
 .settings
 .classpath
 
-./test_data
+test_data/

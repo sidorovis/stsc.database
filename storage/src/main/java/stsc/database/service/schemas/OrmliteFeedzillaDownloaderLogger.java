@@ -9,7 +9,13 @@ import stsc.common.service.statistics.DownloaderLogger;
 import stsc.common.service.statistics.StatisticType;
 import stsc.database.service.storages.FeedzillaDownloaderDatabaseStorage;
 
-public class OrmliteFeedzillaDownloaderLogger implements DownloaderLogger {
+/**
+ * This class is an Ormlite feedzilla download service database logger.
+ * Provide implementation for logger on feedzilla downloader.
+ * 
+ * Probably already old and almost deprecated project branch.
+ */
+public final class OrmliteFeedzillaDownloaderLogger implements DownloaderLogger {
 
 	private final Logger logger;
 	private final FeedzillaDownloaderDatabaseStorage storage;

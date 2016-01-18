@@ -12,6 +12,10 @@ mvn resources:resources liquibase:update -Pfeedzilla.test
 mvn resources:resources liquibase:update -Pfeedzilla.development
 mvn resources:resources liquibase:update -Pfeedzilla.production
 
+mvn resources:resources liquibase:update -Pstsc_optimizer.test
+mvn resources:resources liquibase:update -Pstsc_optimizer.development
+mvn resources:resources liquibase:update -Pstsc_optimizer.production
+
 mvn resources:resources liquibase:rollback -Dliquibase.rollbackCount=1 
 mvn resources:resources liquibase:dropAll
 

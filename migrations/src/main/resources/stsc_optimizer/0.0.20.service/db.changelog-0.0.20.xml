@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<property name="now" value="CURRENT_TIMESTAMP()" dbms="h2" />
+	<property name="now" value="now()" dbms="mysql" />
+
+	<changeSet id="23_15_00__18_01_2016" author="ivan.sidarau@gmail.com">
+		<createTable tableName="experiments">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="user_id" type="int(11)" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="text_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<createTable tableName="string_parameters">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="experiment_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_value" type="clob">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="experiment_id"
+			baseTableName="string_parameters" constraintName="fk_string_parameter_experiment"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
+	</changeSet>
+
+</databaseChangeLog>

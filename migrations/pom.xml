@@ -150,6 +150,51 @@
 				</resources>
 			</build>
 		</profile>
+		<profile>
+			<id>stsc_optimizer.production</id>
+			<build>
+				<filters>
+					<filter>${project.basedir}/../config/stsc_optimizer/production.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>stsc_optimizer.development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<filters>
+					<filter>${project.basedir}/../config/stsc_optimizer/development.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>stsc_optimizer.test</id>
+			<build>
+				<filters>
+					<filter>${project.basedir}/../config/stsc_optimizer/test.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
 	</profiles>
 	<dependencies>
 		<dependency>
@@ -161,5 +206,5 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 	</dependencies>
-	<description>Stsc news feedzilla sqlite migrations tool.</description>
+	<description>Stsc database migrations project for different modules.</description>
 </project>
