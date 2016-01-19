@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import stsc.common.service.statistics.StatisticType;
-import stsc.database.migrations.YahooDownloaderDatabaseSettings;
+import stsc.database.migrations.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderStatistics;
 import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
 
@@ -24,7 +24,7 @@ public class OrmliteYahooDownloaderStatisticsTest {
 		return Integer.valueOf(id);
 	}
 
-	private Date create(YahooDownloaderDatabaseSettings settings) throws IOException, SQLException {
+	private Date create(OptimizerDatabaseSettings settings) throws IOException, SQLException {
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
 		Assert.assertNotNull(storage);
 		final Date d = new Date();
@@ -51,7 +51,7 @@ public class OrmliteYahooDownloaderStatisticsTest {
 
 	@Test
 	public void testOrmliteYahooDatafeedSettings() throws SQLException, LiquibaseException, IOException {
-		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
+		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
 		final List<OrmliteYahooDownloaderStatistics> list = storage.getStatistics("yahoo_settings");
@@ -61,7 +61,7 @@ public class OrmliteYahooDownloaderStatisticsTest {
 
 	@Test
 	public void testOrmliteYahooDatafeedSettingsGetStatisticsByPid() throws SQLException, LiquibaseException, IOException {
-		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
+		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
 		final List<OrmliteYahooDownloaderStatistics> list = storage.getStatistics("yahoo_settings", getId());
