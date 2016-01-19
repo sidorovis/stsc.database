@@ -14,7 +14,7 @@ public class YahooDatabaseSettingsTest {
 	public void testYahooDatabaseSettings() throws IOException {
 		final YahooDownloaderDatabaseSettings ds = YahooDownloaderDatabaseSettings.test();
 		Assert.assertEquals("org.h2.Driver", ds.getJdbcDriver());
-		Assert.assertEquals("jdbc:h2:mem:yahoo_base;DB_CLOSE_DELAY=-1", ds.getJdbcUrl());
+		Assert.assertEquals("jdbc:h2:mem:yahoo_downloader;DB_CLOSE_DELAY=-1", ds.getJdbcUrl());
 	}
 
 	@Test
