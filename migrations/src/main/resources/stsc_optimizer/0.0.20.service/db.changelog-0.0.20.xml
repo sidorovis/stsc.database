@@ -15,21 +15,57 @@
 			<column name="user_id" type="int(11)" defaultValueNumeric="0">
 				<constraints nullable="false" />
 			</column>
-			<column name="text_name" type="varchar(255)">
+			<column name="title" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="period_from" type="DATETIME" >
+				<constraints nullable="false" />
+			</column>
+			<column name="period_to" type="DATETIME" >
+				<constraints nullable="false" />
+			</column>
+
 			<column name="created_at" type="DATETIME" />
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<createTable tableName="string_parameters">
+		<createTable tableName="executions">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="experiment_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
+			<column name="index_number" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="execution_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="algorithm_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="execution_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
 
+		<addForeignKeyConstraint baseColumnNames="experiment_id"
+			baseTableName="executions" constraintName="fk_execution_to_experiment"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
+
+		<createTable tableName="string_parameters">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
 			<column name="parameter_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
@@ -40,9 +76,85 @@
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<addForeignKeyConstraint baseColumnNames="experiment_id"
-			baseTableName="string_parameters" constraintName="fk_string_parameter_experiment"
-			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
+		<addForeignKeyConstraint baseColumnNames="execution_id"
+			baseTableName="string_parameters" constraintName="fk_string_parameter_to_execution"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
+
+		<createTable tableName="sub_execution_parameters">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_value" type="clob">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_id"
+			baseTableName="sub_execution_parameters" constraintName="fk_sub_execution_parameter_to_execution"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
+
+		<createTable tableName="integer_parameters">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="from" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="step" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="to" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_id"
+			baseTableName="integer_parameters" constraintName="fk_integer_parameter_to_execution"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
+
+		<createTable tableName="double_parameters">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="from" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="step" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="to" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_id"
+			baseTableName="double_parameters" constraintName="fk_double_parameter_to_execution"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
+
 	</changeSet>
 
 </databaseChangeLog>
