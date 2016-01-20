@@ -11,30 +11,30 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
-import stsc.database.migrations.OptimizerDatabaseSettings;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiments;
+import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
 
-public final class OrmliteOptimizerStorage {
+public final class OptimizerStorage {
 
 	private final ConnectionSource source;
 
-	private final Dao<OrmliteOptimizerExperiments, Integer> experiments;
+	private final Dao<OrmliteOptimizerExperiment, Integer> experiments;
 
-	public OrmliteOptimizerStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
+	public OptimizerStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
 		this.source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
-		this.experiments = DaoManager.createDao(source, OrmliteOptimizerExperiments.class);
-		Validate.isTrue(experiments.isTableExists(), "OrmliteSimulatorStorage table should exists");
+		this.experiments = DaoManager.createDao(source, OrmliteOptimizerExperiment.class);
+		Validate.isTrue(experiments.isTableExists(), "OrmliteOptimizerExperiments table should exists");
 		// statistics = DaoManager.createDao(source, OrmliteYahooDownloaderStatistics.class);
 		// Validate.isTrue(statistics.isTableExists(), "OrmliteSimulatorStorage table should exists");
 	}
 
-	public CreateOrUpdateStatus setExperiments(OrmliteOptimizerExperiments newCategory) throws SQLException {
+	public CreateOrUpdateStatus setExperiments(OrmliteOptimizerExperiment newCategory) throws SQLException {
 		newCategory.setCreatedAt();
 		newCategory.setUpdatedAt();
 		return experiments.createOrUpdate(newCategory);
 	}
 
-	public OrmliteOptimizerExperiments getExperiment(Integer id) throws SQLException {
+	public OrmliteOptimizerExperiment getExperiment(Integer id) throws SQLException {
 		return experiments.queryForId(id);
 	}
 

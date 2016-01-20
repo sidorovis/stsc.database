@@ -17,7 +17,7 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.FileSystemResourceAccessor;
 
-public final class OptimizerDatabaseSettings {
+public final class YahooDownloaderDatabaseSettings {
 
 	public final static String configFolder = "../config/yahoo_downloader/";
 	public final static String dbChangeLog = "../migrations/target/classes/yahoo_downloader/";
@@ -28,19 +28,19 @@ public final class OptimizerDatabaseSettings {
 	private final String login;
 	private final String password;
 
-	public static OptimizerDatabaseSettings development() throws IOException {
-		return new OptimizerDatabaseSettings(configFolder + "development.properties");
+	public static YahooDownloaderDatabaseSettings development() throws IOException {
+		return new YahooDownloaderDatabaseSettings(configFolder + "development.properties");
 	}
 
-	public static OptimizerDatabaseSettings test() throws IOException {
-		return new OptimizerDatabaseSettings(configFolder + "test.properties");
+	public static YahooDownloaderDatabaseSettings test() throws IOException {
+		return new YahooDownloaderDatabaseSettings(configFolder + "test.properties");
 	}
 
-	public OptimizerDatabaseSettings(final String filePath) throws IOException {
+	public YahooDownloaderDatabaseSettings(final String filePath) throws IOException {
 		this(new FileInputStream(filePath));
 	}
 
-	private OptimizerDatabaseSettings(InputStream sourceInputStream) throws IOException {
+	private YahooDownloaderDatabaseSettings(InputStream sourceInputStream) throws IOException {
 		try (DataInputStream inputStream = new DataInputStream(sourceInputStream)) {
 			final Properties properties = new Properties();
 			properties.load(inputStream);
@@ -68,7 +68,7 @@ public final class OptimizerDatabaseSettings {
 		return password;
 	}
 
-	public OptimizerDatabaseSettings migrate() throws SQLException, LiquibaseException {
+	public YahooDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
 		final File parentPath = new File(dbChangeLog);
@@ -81,7 +81,7 @@ public final class OptimizerDatabaseSettings {
 		return this;
 	}
 
-	public OptimizerDatabaseSettings dropAll() throws SQLException, LiquibaseException {
+	public YahooDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
 		final File parentPath = new File(dbChangeLog);

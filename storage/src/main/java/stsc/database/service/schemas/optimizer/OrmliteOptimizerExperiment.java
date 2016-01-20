@@ -7,12 +7,12 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "experiments")
-public class OrmliteOptimizerExperiments {
+public class OrmliteOptimizerExperiment {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
 
-	@DatabaseField(columnName = "user_id", canBeNull = false)
+	@DatabaseField(columnName = "user_id", canBeNull = false, defaultValue = "0")
 	private Integer userId;
 
 	@DatabaseField(columnName = "title", canBeNull = false)
@@ -21,18 +21,26 @@ public class OrmliteOptimizerExperiments {
 	@DatabaseField(columnName = "description", canBeNull = false)
 	private String description;
 
+	@DatabaseField(columnName = "period_from", dataType = DataType.DATE)
+	private Date periodFrom;
+
+	@DatabaseField(columnName = "period_to", dataType = DataType.DATE)
+	private Date periodTo;
+
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
 
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	@SuppressWarnings("unused")
-	private OrmliteOptimizerExperiments() {
-		// for ormlite
+	private OrmliteOptimizerExperiment() {
+		// this.userId = 0;
+		this.periodFrom = new Date();
+		this.periodTo = new Date();
 	}
 
-	public OrmliteOptimizerExperiments(String title, String description) {
+	public OrmliteOptimizerExperiment(String title, String description) {
+		this();
 		setTitle(title);
 		setDescription(description);
 	}
@@ -55,6 +63,22 @@ public class OrmliteOptimizerExperiments {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public Date getPeriodFrom() {
+		return periodFrom;
+	}
+
+	public void setPeriodFrom(Date periodFrom) {
+		this.periodFrom = periodFrom;
+	}
+
+	public Date getPeriodTo() {
+		return periodTo;
+	}
+
+	public void setPeriodTo(Date periodTo) {
+		this.periodTo = periodTo;
 	}
 
 	public void setCreatedAt() {

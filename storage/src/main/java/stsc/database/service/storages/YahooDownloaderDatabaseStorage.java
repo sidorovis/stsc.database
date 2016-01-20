@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.Validate;
 
-import stsc.database.migrations.OptimizerDatabaseSettings;
+import stsc.database.migrations.YahooDownloaderDatabaseSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderSettings;
 import stsc.database.service.schemas.OrmliteYahooDownloaderStatistics;
 
@@ -23,7 +23,7 @@ public class YahooDownloaderDatabaseStorage {
 	private final Dao<OrmliteYahooDownloaderSettings, Integer> settings;
 	private final Dao<OrmliteYahooDownloaderStatistics, Integer> statistics;
 
-	public YahooDownloaderDatabaseStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
+	public YahooDownloaderDatabaseStorage(final YahooDownloaderDatabaseSettings databaseSettings) throws IOException, SQLException {
 		this.source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
 		this.settings = DaoManager.createDao(source, OrmliteYahooDownloaderSettings.class);
 		Validate.isTrue(settings.isTableExists(), "OrmliteYahooDatafeedSettings table should exists");
