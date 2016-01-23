@@ -13,7 +13,7 @@ import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
 public class OptimizerStorageTest {
 
 	@Test
-	public void testExperiments() throws SQLException, LiquibaseException, IOException {
+	public void testOptimizerStorage() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final OptimizerStorage storage = new OptimizerStorage(databaseSettings);
 		Assert.assertNotNull(storage);
