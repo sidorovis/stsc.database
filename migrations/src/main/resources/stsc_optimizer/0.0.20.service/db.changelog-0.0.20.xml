@@ -69,7 +69,7 @@
 			<column name="parameter_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_value" type="clob">
+			<column name="parameter_domen" type="clob">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -90,7 +90,7 @@
 			<column name="parameter_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_value" type="clob">
+			<column name="parameter_domen" type="clob">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
