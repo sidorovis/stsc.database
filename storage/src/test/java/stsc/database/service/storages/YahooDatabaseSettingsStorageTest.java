@@ -1,4 +1,4 @@
-package stsc.database.service.settings;
+package stsc.database.service.storages;
 
 import java.io.IOException;
 import java.sql.SQLException;
