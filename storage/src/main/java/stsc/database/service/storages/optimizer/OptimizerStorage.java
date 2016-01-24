@@ -16,6 +16,7 @@ import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
+import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
 public final class OptimizerStorage {
 
@@ -24,15 +25,18 @@ public final class OptimizerStorage {
 	private final Dao<OrmliteOptimizerExperiment, Integer> experiments;
 	private final Dao<OrmliteOptimizerExecution, Integer> executions;
 	private final Dao<OrmliteOptimizerStringParameter, Integer> stringParameters;
+	private final Dao<OrmliteOptimizerSubExecutionParameter, Integer> subExecutionParameters;
 
 	public OptimizerStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
 		this.source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
 		this.experiments = DaoManager.createDao(source, OrmliteOptimizerExperiment.class);
 		this.executions = DaoManager.createDao(source, OrmliteOptimizerExecution.class);
 		this.stringParameters = DaoManager.createDao(source, OrmliteOptimizerStringParameter.class);
+		this.subExecutionParameters = DaoManager.createDao(source, OrmliteOptimizerSubExecutionParameter.class);
 		Validate.isTrue(experiments.isTableExists(), "OrmliteOptimizerExperiments table should exists");
 		Validate.isTrue(executions.isTableExists(), "OrmliteOptimizerExecutions table should exists");
 		Validate.isTrue(stringParameters.isTableExists(), "OrmliteOptimizerStringParameters table should exists");
+		Validate.isTrue(subExecutionParameters.isTableExists(), "OrmliteOptimizerSubExecutionParameters table should exists");
 	}
 
 	public CreateOrUpdateStatus setExperiments(final OrmliteOptimizerExperiment newExperiment) throws SQLException {
@@ -63,6 +67,16 @@ public final class OptimizerStorage {
 
 	public List<OrmliteOptimizerStringParameter> getStringParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return stringParameters.queryForEq("execution_id", execution.getId());
+	}
+
+	public CreateOrUpdateStatus setSubExecutionParameters(OrmliteOptimizerSubExecutionParameter newSubExecutionParameter) throws SQLException {
+		newSubExecutionParameter.setCreatedAt();
+		newSubExecutionParameter.setUpdatedAt();
+		return subExecutionParameters.createOrUpdate(newSubExecutionParameter);
+	}
+
+	public List<OrmliteOptimizerSubExecutionParameter> getSubExecutionParameters(OrmliteOptimizerExecution execution) throws SQLException {
+		return subExecutionParameters.queryForEq("execution_id", execution.getId());
 	}
 
 }
