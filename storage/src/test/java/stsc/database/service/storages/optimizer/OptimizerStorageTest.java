@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.OrmliteOptimizerDoubleParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
@@ -47,6 +48,13 @@ public class OptimizerStorageTest {
 		integerParameter.setStep(2);
 		integerParameter.setTo(14);
 		Assert.assertEquals(1, storage.setIntegerParameters(integerParameter).getNumLinesChanged());
+
+		final OrmliteOptimizerDoubleParameter doubleParameter = new OrmliteOptimizerDoubleParameter(execution.getId());
+		doubleParameter.setParameterName("double parameter");
+		doubleParameter.setFrom(1.0);
+		doubleParameter.setStep(2.0);
+		doubleParameter.setTo(14.0);
+		Assert.assertEquals(1, storage.setDoubleParameters(doubleParameter).getNumLinesChanged());
 		
 		databaseSettings.dropAll();
 	}
