@@ -15,6 +15,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
+import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
@@ -26,6 +27,8 @@ public final class OptimizerStorage {
 	private final Dao<OrmliteOptimizerExecution, Integer> executions;
 	private final Dao<OrmliteOptimizerStringParameter, Integer> stringParameters;
 	private final Dao<OrmliteOptimizerSubExecutionParameter, Integer> subExecutionParameters;
+	private final Dao<OrmliteOptimizerIntegerParameter, Integer> integerParameters;
+	// private final Dao<OrmliteOptimizerSubExecutionParameter, Integer> subExecutionParameters;
 
 	public OptimizerStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
 		this.source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
@@ -33,10 +36,12 @@ public final class OptimizerStorage {
 		this.executions = DaoManager.createDao(source, OrmliteOptimizerExecution.class);
 		this.stringParameters = DaoManager.createDao(source, OrmliteOptimizerStringParameter.class);
 		this.subExecutionParameters = DaoManager.createDao(source, OrmliteOptimizerSubExecutionParameter.class);
+		this.integerParameters = DaoManager.createDao(source, OrmliteOptimizerIntegerParameter.class);
 		Validate.isTrue(experiments.isTableExists(), "OrmliteOptimizerExperiments table should exists");
 		Validate.isTrue(executions.isTableExists(), "OrmliteOptimizerExecutions table should exists");
 		Validate.isTrue(stringParameters.isTableExists(), "OrmliteOptimizerStringParameters table should exists");
 		Validate.isTrue(subExecutionParameters.isTableExists(), "OrmliteOptimizerSubExecutionParameters table should exists");
+		Validate.isTrue(integerParameters.isTableExists(), "OrmliteOptimizerIntegerParameters table should exists");
 	}
 
 	public CreateOrUpdateStatus setExperiments(final OrmliteOptimizerExperiment newExperiment) throws SQLException {
@@ -77,6 +82,16 @@ public final class OptimizerStorage {
 
 	public List<OrmliteOptimizerSubExecutionParameter> getSubExecutionParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return subExecutionParameters.queryForEq("execution_id", execution.getId());
+	}
+
+	public CreateOrUpdateStatus setIntegerParameters(OrmliteOptimizerIntegerParameter newIntegerParameter) throws SQLException {
+		newIntegerParameter.setCreatedAt();
+		newIntegerParameter.setUpdatedAt();
+		return integerParameters.createOrUpdate(newIntegerParameter);
+	}
+
+	public List<OrmliteOptimizerIntegerParameter> getIntegerParameters(OrmliteOptimizerExecution execution) throws SQLException {
+		return integerParameters.queryForEq("execution_id", execution.getId());
 	}
 
 }

@@ -111,13 +111,13 @@
 			<column name="parameter_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="from" type="int(11)">
+			<column name="domen_from" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="step" type="int(11)">
+			<column name="domen_step" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="to" type="int(11)">
+			<column name="domen_to" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -138,13 +138,13 @@
 			<column name="parameter_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="from" type="double">
+			<column name="domen_from" type="double">
 				<constraints nullable="false" />
 			</column>
-			<column name="step" type="double">
+			<column name="domen_step" type="double">
 				<constraints nullable="false" />
 			</column>
-			<column name="to" type="double">
+			<column name="domen_to" type="double">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />

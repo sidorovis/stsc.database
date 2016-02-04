@@ -10,6 +10,7 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
+import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
@@ -40,6 +41,13 @@ public class OptimizerStorageTest {
 		subExecutionParameter.setParameterName("the name");
 		Assert.assertEquals(1, storage.setSubExecutionParameters(subExecutionParameter).getNumLinesChanged());
 
+		final OrmliteOptimizerIntegerParameter integerParameter = new OrmliteOptimizerIntegerParameter(execution.getId());
+		integerParameter.setParameterName("integer parameter");
+		integerParameter.setFrom(1);
+		integerParameter.setStep(2);
+		integerParameter.setTo(14);
+		Assert.assertEquals(1, storage.setIntegerParameters(integerParameter).getNumLinesChanged());
+		
 		databaseSettings.dropAll();
 	}
 
