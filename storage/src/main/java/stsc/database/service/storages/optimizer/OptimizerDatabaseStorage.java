@@ -20,7 +20,7 @@ import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
-public final class OptimizerStorage {
+public final class OptimizerDatabaseStorage {
 
 	private final ConnectionSource source;
 
@@ -31,7 +31,7 @@ public final class OptimizerStorage {
 	private final Dao<OrmliteOptimizerIntegerParameter, Integer> integerParameters;
 	private final Dao<OrmliteOptimizerDoubleParameter, Integer> doubleParameters;
 
-	public OptimizerStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
+	public OptimizerDatabaseStorage(final OptimizerDatabaseSettings databaseSettings) throws IOException, SQLException {
 		this.source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
 		this.experiments = DaoManager.createDao(source, OrmliteOptimizerExperiment.class);
 		this.executions = DaoManager.createDao(source, OrmliteOptimizerExecution.class);

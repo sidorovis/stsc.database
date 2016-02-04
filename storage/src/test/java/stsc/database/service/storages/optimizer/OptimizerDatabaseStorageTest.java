@@ -15,12 +15,12 @@ import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
-public class OptimizerStorageTest {
+public class OptimizerDatabaseStorageTest {
 
 	@Test
-	public void testOptimizerStorage() throws SQLException, LiquibaseException, IOException {
+	public void testOptimizerDatabaseStorage() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
-		final OptimizerStorage storage = new OptimizerStorage(databaseSettings);
+		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(databaseSettings);
 		Assert.assertNotNull(storage);
 
 		final OrmliteOptimizerExperiment ooe = new OrmliteOptimizerExperiment("experiment A", "this is a test experiment");

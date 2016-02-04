@@ -8,14 +8,14 @@ import org.junit.Test;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
-import stsc.database.service.storages.optimizer.OptimizerStorage;
+import stsc.database.service.storages.optimizer.OptimizerDatabaseStorage;
 
 public class OrmliteOptimizerStringParameterTest {
 
 	@Test
 	public void testOrmliteOptimizerStringParameters() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
-		final OptimizerStorage storage = new OptimizerStorage(settings);
+		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(settings);
 		Assert.assertNotNull(storage);
 		{
 			final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
