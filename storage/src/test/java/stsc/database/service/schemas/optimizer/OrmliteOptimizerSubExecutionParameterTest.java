@@ -19,21 +19,21 @@ public class OrmliteOptimizerSubExecutionParameterTest {
 		Assert.assertNotNull(storage);
 		{
 			final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
-			Assert.assertEquals(1, storage.setExperiments(experiment).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveExperiment(experiment).getNumLinesChanged());
 			final OrmliteOptimizerExecution execution = new OrmliteOptimizerExecution(experiment.getId(), 1);
 			execution.setExecutionName("exec1");
 			execution.setAlgorithmName("SuperProfitableAlgo");
 			execution.setExecutionType("STOCK or EOD");
-			Assert.assertEquals(1, storage.setExecutions(execution).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
 			final OrmliteOptimizerStringParameter stringParameter = new OrmliteOptimizerStringParameter(execution.getId());
 			stringParameter.setParameterName("parameterOfAlgorithmA");
 			stringParameter.setParameterDomen("parameter|domen");
-			Assert.assertEquals(1, storage.setStringParameters(stringParameter).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveStringParameter(stringParameter).getNumLinesChanged());
 		}
 		{
-			final OrmliteOptimizerExperiment experimentCopy = storage.getExperiment(1);
-			final OrmliteOptimizerExecution executionCopy = storage.getExecutions(experimentCopy).get(0);
-			final OrmliteOptimizerStringParameter copy = storage.getStringParameters(executionCopy).get(0);
+			final OrmliteOptimizerExperiment experimentCopy = storage.loadExperiment(1);
+			final OrmliteOptimizerExecution executionCopy = storage.loadExecutions(experimentCopy).get(0);
+			final OrmliteOptimizerStringParameter copy = storage.loadStringParameters(executionCopy).get(0);
 			Assert.assertEquals("parameterOfAlgorithmA", copy.getParameterName());
 			Assert.assertEquals("parameter|domen", copy.getParameterDomen());
 			Assert.assertNotNull(copy.getCreatedAt());

@@ -27,10 +27,32 @@
 			<column name="period_to" type="DATETIME" >
 				<constraints nullable="false" />
 			</column>
+			<column name="commited" type="boolean" defaultValueBoolean="false" >
+				<constraints nullable="false" />
+			</column>
+			<column name="processed" type="boolean" defaultValueBoolean="false" >
+				<constraints nullable="false" />
+			</column>
 
 			<column name="created_at" type="DATETIME" />
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
+
+		<createTable tableName="experiment_locks">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" unique="true" />
+			</column>
+			<column name="experiment_id" type="int(11)">
+				<constraints nullable="false" unique="true" />
+			</column>
+
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="experiment_id"
+			baseTableName="experiment_locks" constraintName="fk_experiment_lock_to_experiment"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
 
 		<createTable tableName="executions">
 			<column name="id" type="int(11)" autoIncrement="true">

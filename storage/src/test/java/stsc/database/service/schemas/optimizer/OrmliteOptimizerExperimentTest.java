@@ -19,10 +19,10 @@ public class OrmliteOptimizerExperimentTest {
 		Assert.assertNotNull(storage);
 		{
 			final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
-			Assert.assertEquals(1, storage.setExperiments(experiment).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveExperiment(experiment).getNumLinesChanged());
 		}
 		{
-			final OrmliteOptimizerExperiment copy = storage.getExperiment(1);
+			final OrmliteOptimizerExperiment copy = storage.loadExperiment(1);
 			Assert.assertEquals("optimizer", copy.getTitle());
 			Assert.assertEquals("description for optimization experiment", copy.getDescription());
 			Assert.assertNotNull(copy.getPeriodFrom());

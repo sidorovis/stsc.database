@@ -9,11 +9,13 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "experiments")
 public final class OrmliteOptimizerExperiment {
 
+	public final static String USER_ID_COLUMN_NAME = "user_id";
+
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
 
-	@DatabaseField(columnName = "user_id", canBeNull = false, defaultValue = "0")
-	private Integer userId;
+	@DatabaseField(columnName = USER_ID_COLUMN_NAME, canBeNull = false, defaultValue = "0")
+	private int userId;
 
 	@DatabaseField(columnName = "title", canBeNull = false)
 	private String title;
@@ -21,11 +23,17 @@ public final class OrmliteOptimizerExperiment {
 	@DatabaseField(columnName = "description", canBeNull = false)
 	private String description;
 
-	@DatabaseField(columnName = "period_from", dataType = DataType.DATE)
+	@DatabaseField(columnName = "period_from", dataType = DataType.DATE, canBeNull = false)
 	private Date periodFrom;
 
-	@DatabaseField(columnName = "period_to", dataType = DataType.DATE)
+	@DatabaseField(columnName = "period_to", dataType = DataType.DATE, canBeNull = false)
 	private Date periodTo;
+
+	@DatabaseField(columnName = "commited", dataType = DataType.BOOLEAN, canBeNull = false)
+	private boolean commited;
+
+	@DatabaseField(columnName = "processed", dataType = DataType.BOOLEAN, canBeNull = false)
+	private boolean processed;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -79,6 +87,18 @@ public final class OrmliteOptimizerExperiment {
 
 	public void setPeriodTo(Date periodTo) {
 		this.periodTo = periodTo;
+	}
+
+	public void setCommited() {
+		this.commited = true;
+	}
+
+	public void setProcessed() {
+		this.processed = true;
+	}
+
+	public boolean isProcessed() {
+		return this.processed;
 	}
 
 	public void setCreatedAt() {

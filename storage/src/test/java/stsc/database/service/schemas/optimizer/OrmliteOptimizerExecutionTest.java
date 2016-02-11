@@ -19,16 +19,16 @@ public class OrmliteOptimizerExecutionTest {
 		Assert.assertNotNull(storage);
 		{
 			final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
-			Assert.assertEquals(1, storage.setExperiments(experiment).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveExperiment(experiment).getNumLinesChanged());
 			final OrmliteOptimizerExecution execution = new OrmliteOptimizerExecution(experiment.getId(), 1);
 			execution.setExecutionName("exec1");
 			execution.setAlgorithmName("SuperProfitableAlgo");
 			execution.setExecutionType("STOCK or EOD");
-			Assert.assertEquals(1, storage.setExecutions(execution).getNumLinesChanged());
+			Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
 		}
 		{
-			final OrmliteOptimizerExperiment experimentCopy = storage.getExperiment(1);
-			final OrmliteOptimizerExecution copy = storage.getExecutions(experimentCopy).get(0);
+			final OrmliteOptimizerExperiment experimentCopy = storage.loadExperiment(1);
+			final OrmliteOptimizerExecution copy = storage.loadExecutions(experimentCopy).get(0);
 			Assert.assertEquals("exec1", copy.getExecutionName());
 			Assert.assertEquals("SuperProfitableAlgo", copy.getAlgorithmName());
 			Assert.assertEquals("STOCK or EOD", copy.getExecutionType());
