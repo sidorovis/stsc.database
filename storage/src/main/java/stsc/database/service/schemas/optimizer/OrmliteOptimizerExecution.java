@@ -24,8 +24,8 @@ public final class OrmliteOptimizerExecution {
 	@DatabaseField(columnName = "algorithm_name", canBeNull = false)
 	private String algorithmName;
 
-	@DatabaseField(columnName = "execution_type", canBeNull = false)
-	private String executionType;
+	@DatabaseField(columnName = "algorithm_type", canBeNull = false)
+	private String algorithmType;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -58,12 +58,12 @@ public final class OrmliteOptimizerExecution {
 		this.algorithmName = algorithmName;
 	}
 
-	public String getExecutionType() {
-		return executionType;
+	public String getAlgorithmType() {
+		return algorithmType;
 	}
 
-	public void setExecutionType(String executionType) {
-		this.executionType = executionType;
+	public void setAlgorithmType(String algorithmType) {
+		this.algorithmType = algorithmType;
 	}
 
 	public Integer getId() {

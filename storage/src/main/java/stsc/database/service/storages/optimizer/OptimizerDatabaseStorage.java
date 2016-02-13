@@ -54,16 +54,15 @@ public final class OptimizerDatabaseStorage {
 		Validate.isTrue(doubleParameters.isTableExists(), "OrmliteOptimizerDoubleParameters table should exists");
 	}
 
+	/**
+	 * automatically delete lock from experiment
+	 */
 	public CreateOrUpdateStatus saveExperiment(final OrmliteOptimizerExperiment newExperiment) throws SQLException {
 		newExperiment.setCreatedAt();
 		newExperiment.setUpdatedAt();
 		// we should delete experiment lock in case if experiment was processed
 		if (newExperiment.getId() != null && newExperiment.isProcessed()) {
-			final OrmliteOptimizerExperimentLock queryForEq = experimentLocks.queryForFirst( //
-					experimentLocks.queryBuilder().where().eq("experiment_id", newExperiment.getId()).prepare());
-			if (queryForEq != null) {
-				experimentLocks.delete(queryForEq);
-			}
+			deleteLock(newExperiment);
 		}
 		return experiments.createOrUpdate(newExperiment);
 	}
@@ -95,6 +94,14 @@ public final class OptimizerDatabaseStorage {
 			}
 		}
 		return Optional.empty();
+	}
+
+	public void deleteLock(final OrmliteOptimizerExperiment newExperiment) throws SQLException {
+		final OrmliteOptimizerExperimentLock queryForEq = experimentLocks.queryForFirst( //
+				experimentLocks.queryBuilder().where().eq("experiment_id", newExperiment.getId()).prepare());
+		if (queryForEq != null) {
+			experimentLocks.delete(queryForEq);
+		}
 	}
 
 	private int saveExperimentLock(OrmliteOptimizerExperiment commitedExperiment) throws SQLException {

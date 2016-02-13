@@ -24,7 +24,7 @@ public class OptimizerDatabaseStorageTest {
 		final OrmliteOptimizerExecution execution = new OrmliteOptimizerExecution(ooe.getId(), 0);
 		execution.setAlgorithmName("algo name");
 		execution.setExecutionName("execution name");
-		execution.setExecutionType("execution type");
+		execution.setAlgorithmType("execution type");
 		Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
 
 		final OrmliteOptimizerStringParameter stringParameter = new OrmliteOptimizerStringParameter(execution.getId());
@@ -67,7 +67,7 @@ public class OptimizerDatabaseStorageTest {
 
 	@Test
 	public void testOptimizerDatabaseStorageBookExperiment() throws SQLException, LiquibaseException, IOException {
-		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.development().dropAll().migrate();
+		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(databaseSettings);
 		Assert.assertNotNull(storage);
 		

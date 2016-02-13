@@ -23,7 +23,7 @@ public class OrmliteOptimizerSubExecutionParameterTest {
 			final OrmliteOptimizerExecution execution = new OrmliteOptimizerExecution(experiment.getId(), 1);
 			execution.setExecutionName("exec1");
 			execution.setAlgorithmName("SuperProfitableAlgo");
-			execution.setExecutionType("STOCK or EOD");
+			execution.setAlgorithmType("STOCK or EOD");
 			Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
 			final OrmliteOptimizerStringParameter stringParameter = new OrmliteOptimizerStringParameter(execution.getId());
 			stringParameter.setParameterName("parameterOfAlgorithmA");
