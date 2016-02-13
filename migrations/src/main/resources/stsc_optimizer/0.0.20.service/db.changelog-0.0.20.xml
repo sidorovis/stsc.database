@@ -70,7 +70,7 @@
 			<column name="algorithm_name" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="execution_type" type="varchar(64)">
+			<column name="algorithm_type" type="varchar(64)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
