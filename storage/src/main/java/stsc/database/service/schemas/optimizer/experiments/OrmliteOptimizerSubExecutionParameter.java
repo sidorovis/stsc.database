@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.util.Date;
 
@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "double_parameters")
-public final class OrmliteOptimizerDoubleParameter {
+@DatabaseTable(tableName = "sub_execution_parameters")
+public final class OrmliteOptimizerSubExecutionParameter {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -18,14 +18,8 @@ public final class OrmliteOptimizerDoubleParameter {
 	@DatabaseField(columnName = "parameter_name", canBeNull = false)
 	private String parameterName;
 
-	@DatabaseField(columnName = "domen_from", canBeNull = false)
-	private Double from;
-
-	@DatabaseField(columnName = "domen_step", canBeNull = false)
-	private Double step;
-
-	@DatabaseField(columnName = "domen_to", canBeNull = false)
-	private Double to;
+	@DatabaseField(columnName = "parameter_domen", canBeNull = false)
+	private String parameterDomen;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -33,10 +27,10 @@ public final class OrmliteOptimizerDoubleParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerDoubleParameter() {
+	private OrmliteOptimizerSubExecutionParameter() {
 	}
 
-	public OrmliteOptimizerDoubleParameter(int executionId) {
+	public OrmliteOptimizerSubExecutionParameter(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -53,28 +47,12 @@ public final class OrmliteOptimizerDoubleParameter {
 		this.parameterName = parameterName;
 	}
 
-	public Double getFrom() {
-		return from;
+	public String getParameterDomen() {
+		return parameterDomen;
 	}
 
-	public void setFrom(Double from) {
-		this.from = from;
-	}
-
-	public Double getStep() {
-		return step;
-	}
-
-	public void setStep(Double step) {
-		this.step = step;
-	}
-
-	public Double getTo() {
-		return to;
-	}
-
-	public void setTo(Double to) {
-		this.to = to;
+	public void setParameterDomen(String parameterDomen) {
+		this.parameterDomen = parameterDomen;
 	}
 
 	public Integer getExecutionId() {

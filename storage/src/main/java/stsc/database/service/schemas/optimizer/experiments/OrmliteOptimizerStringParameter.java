@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,9 +11,12 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringParameter;
 import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 
-public class OrmliteOptimizerStringParameterTest {
+public class OrmliteOptimizerSubExecutionParameterTest {
 
 	@Test
 	public void testOrmliteOptimizerStringParameters() throws SQLException, LiquibaseException, IOException {

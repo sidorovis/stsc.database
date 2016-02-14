@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.util.Date;
 
@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "integer_parameters")
-public final class OrmliteOptimizerIntegerParameter {
+@DatabaseTable(tableName = "double_parameters")
+public final class OrmliteOptimizerDoubleParameter {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -19,13 +19,13 @@ public final class OrmliteOptimizerIntegerParameter {
 	private String parameterName;
 
 	@DatabaseField(columnName = "domen_from", canBeNull = false)
-	private Integer from;
+	private Double from;
 
 	@DatabaseField(columnName = "domen_step", canBeNull = false)
-	private Integer step;
+	private Double step;
 
 	@DatabaseField(columnName = "domen_to", canBeNull = false)
-	private Integer to;
+	private Double to;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -33,10 +33,10 @@ public final class OrmliteOptimizerIntegerParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerIntegerParameter() {
+	private OrmliteOptimizerDoubleParameter() {
 	}
 
-	public OrmliteOptimizerIntegerParameter(int executionId) {
+	public OrmliteOptimizerDoubleParameter(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -53,27 +53,27 @@ public final class OrmliteOptimizerIntegerParameter {
 		this.parameterName = parameterName;
 	}
 
-	public int getFrom() {
+	public Double getFrom() {
 		return from;
 	}
 
-	public void setFrom(int from) {
+	public void setFrom(Double from) {
 		this.from = from;
 	}
 
-	public int getStep() {
+	public Double getStep() {
 		return step;
 	}
 
-	public void setStep(int step) {
+	public void setStep(Double step) {
 		this.step = step;
 	}
 
-	public int getTo() {
+	public Double getTo() {
 		return to;
 	}
 
-	public void setTo(int to) {
+	public void setTo(Double to) {
 		this.to = to;
 	}
 

@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,13 +10,17 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
+import stsc.common.Settings;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
 import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 
-public class OrmliteOptimizerExecutionTest {
+public class OrmliteOptimizerDoubleParameterTest {
 
 	@Test
-	public void testOrmliteOptimizerExecutions() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteOptimizerDoubleParameters() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerExperimentsDatabaseStorage storage = new OptimizerExperimentsDatabaseStorage(source);
@@ -29,14 +33,21 @@ public class OrmliteOptimizerExecutionTest {
 			execution.setAlgorithmName("SuperProfitableAlgo");
 			execution.setAlgorithmType("STOCK or EOD");
 			Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
+			final OrmliteOptimizerDoubleParameter doubleParameter = new OrmliteOptimizerDoubleParameter(execution.getId());
+			doubleParameter.setParameterName("parameterOfAlgorithmA");
+			doubleParameter.setFrom(10.0);
+			doubleParameter.setStep(2.5);
+			doubleParameter.setTo(20.0);
+			Assert.assertEquals(1, storage.saveDoubleParameter(doubleParameter).getNumLinesChanged());
 		}
 		{
 			final OrmliteOptimizerExperiment experimentCopy = storage.loadExperiment(1);
-			final OrmliteOptimizerExecution copy = storage.loadExecutions(experimentCopy).get(0);
-			Assert.assertEquals("exec1", copy.getExecutionName());
-			Assert.assertEquals("SuperProfitableAlgo", copy.getAlgorithmName());
-			Assert.assertEquals("STOCK or EOD", copy.getAlgorithmType());
-			Assert.assertEquals(1, copy.getExperimentId().intValue());
+			final OrmliteOptimizerExecution executionCopy = storage.loadExecutions(experimentCopy).get(0);
+			final OrmliteOptimizerDoubleParameter copy = storage.loadDoubleParameters(executionCopy).get(0);
+			Assert.assertEquals("parameterOfAlgorithmA", copy.getParameterName());
+			Assert.assertEquals(10.0, copy.getFrom().doubleValue(), Settings.doubleEpsilon);
+			Assert.assertEquals(2.5, copy.getStep().doubleValue(), Settings.doubleEpsilon);
+			Assert.assertEquals(20.0, copy.getTo().doubleValue(), Settings.doubleEpsilon);
 			Assert.assertNotNull(copy.getCreatedAt());
 			Assert.assertNotNull(copy.getUpdatedAt());
 		}

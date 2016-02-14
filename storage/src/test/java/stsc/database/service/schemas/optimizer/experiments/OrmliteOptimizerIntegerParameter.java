@@ -1,4 +1,4 @@
-package stsc.database.service.schemas.optimizer;
+package stsc.database.service.schemas.optimizer.experiments;
 
 import java.util.Date;
 
@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "sub_execution_parameters")
-public final class OrmliteOptimizerSubExecutionParameter {
+@DatabaseTable(tableName = "integer_parameters")
+public final class OrmliteOptimizerIntegerParameter {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -18,8 +18,14 @@ public final class OrmliteOptimizerSubExecutionParameter {
 	@DatabaseField(columnName = "parameter_name", canBeNull = false)
 	private String parameterName;
 
-	@DatabaseField(columnName = "parameter_domen", canBeNull = false)
-	private String parameterDomen;
+	@DatabaseField(columnName = "domen_from", canBeNull = false)
+	private Integer from;
+
+	@DatabaseField(columnName = "domen_step", canBeNull = false)
+	private Integer step;
+
+	@DatabaseField(columnName = "domen_to", canBeNull = false)
+	private Integer to;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -27,10 +33,10 @@ public final class OrmliteOptimizerSubExecutionParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerSubExecutionParameter() {
+	private OrmliteOptimizerIntegerParameter() {
 	}
 
-	public OrmliteOptimizerSubExecutionParameter(int executionId) {
+	public OrmliteOptimizerIntegerParameter(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -47,12 +53,28 @@ public final class OrmliteOptimizerSubExecutionParameter {
 		this.parameterName = parameterName;
 	}
 
-	public String getParameterDomen() {
-		return parameterDomen;
+	public int getFrom() {
+		return from;
 	}
 
-	public void setParameterDomen(String parameterDomen) {
-		this.parameterDomen = parameterDomen;
+	public void setFrom(int from) {
+		this.from = from;
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
+
+	public int getTo() {
+		return to;
+	}
+
+	public void setTo(int to) {
+		this.to = to;
 	}
 
 	public Integer getExecutionId() {

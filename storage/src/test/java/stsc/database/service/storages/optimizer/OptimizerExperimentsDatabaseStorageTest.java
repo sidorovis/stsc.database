@@ -11,12 +11,12 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerDoubleParameter;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerExecution;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerExperiment;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
-import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerIntegerParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerSubExecutionParameter;
 
 public class OptimizerExperimentsDatabaseStorageTest {
 
