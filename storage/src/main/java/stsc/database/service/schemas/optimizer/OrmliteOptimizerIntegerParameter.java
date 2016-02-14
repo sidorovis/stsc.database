@@ -53,27 +53,27 @@ public final class OrmliteOptimizerIntegerParameter {
 		this.parameterName = parameterName;
 	}
 
-	public Integer getFrom() {
+	public int getFrom() {
 		return from;
 	}
 
-	public void setFrom(Integer from) {
+	public void setFrom(int from) {
 		this.from = from;
 	}
 
-	public Integer getStep() {
+	public int getStep() {
 		return step;
 	}
 
-	public void setStep(Integer step) {
+	public void setStep(int step) {
 		this.step = step;
 	}
 
-	public Integer getTo() {
+	public int getTo() {
 		return to;
 	}
 
-	public void setTo(Integer to) {
+	public void setTo(int to) {
 		this.to = to;
 	}
 

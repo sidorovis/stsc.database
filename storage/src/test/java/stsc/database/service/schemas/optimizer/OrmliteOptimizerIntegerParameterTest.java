@@ -37,9 +37,9 @@ public class OrmliteOptimizerIntegerParameterTest {
 			final OrmliteOptimizerExecution executionCopy = storage.loadExecutions(experimentCopy).get(0);
 			final OrmliteOptimizerIntegerParameter copy = storage.loadIntegerParameters(executionCopy).get(0);
 			Assert.assertEquals("parameterOfAlgorithmA", copy.getParameterName());
-			Assert.assertEquals(10, copy.getFrom().intValue());
-			Assert.assertEquals(2, copy.getStep().intValue());
-			Assert.assertEquals(20, copy.getTo().intValue());
+			Assert.assertEquals(10, copy.getFrom());
+			Assert.assertEquals(2, copy.getStep());
+			Assert.assertEquals(20, copy.getTo());
 			Assert.assertNotNull(copy.getCreatedAt());
 			Assert.assertNotNull(copy.getUpdatedAt());
 		}
