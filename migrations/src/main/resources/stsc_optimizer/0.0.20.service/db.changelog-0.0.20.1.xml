@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<property name="now" value="CURRENT_TIMESTAMP()" dbms="h2" />
+	<property name="now" value="now()" dbms="mysql" />
+
+	<changeSet id="22_41_00__14_02_2016" author="ivan.sidarau@gmail.com">
+		<createTable tableName="simulations">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="user_id" type="int(11)" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="period_from" type="DATETIME" >
+				<constraints nullable="false" />
+			</column>
+			<column name="period_to" type="DATETIME" >
+				<constraints nullable="false" />
+			</column>
+
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<createTable tableName="execution_instances">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="simulation_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="index_number" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="execution_instance_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="algorithm_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="algorithm_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="simulation_id"
+			baseTableName="execution_instances" constraintName="fk_execution_instance_to_simulation"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="simulations" />
+
+		<createTable tableName="string_variables">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_instance_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_value" type="clob">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
+			baseTableName="string_variables" constraintName="fk_string_variable_to_execution_instance"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+		<createTable tableName="subexecution_variables">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_instance_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="subexecution_name" type="varchar(512)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
+			baseTableName="subexecution_variables" constraintName="fk_subexecution_variable_to_execution_instance"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+		<createTable tableName="integer_variables">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_instance_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_value" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
+			baseTableName="integer_variables" constraintName="fk_integer_variable_to_execution_instance"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+		<createTable tableName="double_variables">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="execution_instance_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="parameter_value" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
+			baseTableName="double_variables" constraintName="fk_double_variable_to_execution_instance"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+	</changeSet>
+
+</databaseChangeLog>
