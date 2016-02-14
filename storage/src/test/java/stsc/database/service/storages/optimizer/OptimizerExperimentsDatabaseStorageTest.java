@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerDoubleParameter;
@@ -15,9 +18,9 @@ import stsc.database.service.schemas.optimizer.OrmliteOptimizerIntegerParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerStringParameter;
 import stsc.database.service.schemas.optimizer.OrmliteOptimizerSubExecutionParameter;
 
-public class OptimizerDatabaseStorageTest {
+public class OptimizerExperimentsDatabaseStorageTest {
 
-	private OrmliteOptimizerExperiment addExperiment(final OptimizerDatabaseStorage storage) throws SQLException {
+	private OrmliteOptimizerExperiment addExperiment(final OptimizerExperimentsDatabaseStorage storage) throws SQLException {
 		final OrmliteOptimizerExperiment ooe = new OrmliteOptimizerExperiment("experiment A", "this is a test experiment");
 		Assert.assertEquals(1, storage.saveExperiment(ooe).getNumLinesChanged());
 
@@ -50,27 +53,29 @@ public class OptimizerDatabaseStorageTest {
 		doubleParameter.setStep(2.0);
 		doubleParameter.setTo(14.0);
 		Assert.assertEquals(1, storage.saveDoubleParameter(doubleParameter).getNumLinesChanged());
-		
+
 		return ooe;
 	}
-	
+
 	@Test
 	public void testOptimizerDatabaseStorage() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
-		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(databaseSettings);
+		final ConnectionSource source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
+		final OptimizerExperimentsDatabaseStorage storage = new OptimizerExperimentsDatabaseStorage(source);
 		Assert.assertNotNull(storage);
 
 		addExperiment(storage);
-				
+
 		databaseSettings.dropAll();
 	}
 
 	@Test
 	public void testOptimizerDatabaseStorageBookExperiment() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
-		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(databaseSettings);
+		final ConnectionSource source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
+		final OptimizerExperimentsDatabaseStorage storage = new OptimizerExperimentsDatabaseStorage(source);
 		Assert.assertNotNull(storage);
-		
+
 		Assert.assertFalse(storage.bookExperiment().isPresent());
 
 		final OrmliteOptimizerExperiment experiment = addExperiment(storage);
@@ -84,9 +89,9 @@ public class OptimizerDatabaseStorageTest {
 		Assert.assertFalse(storage.bookExperiment().isPresent());
 
 		experiment.setProcessed();
-		Assert.assertEquals(1, storage.saveExperiment(experiment).getNumLinesChanged());		
-		
+		Assert.assertEquals(1, storage.saveExperiment(experiment).getNumLinesChanged());
+
 		databaseSettings.dropAll();
 	}
-	
+
 }

@@ -6,16 +6,20 @@ import java.sql.SQLException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
-import stsc.database.service.storages.optimizer.OptimizerDatabaseStorage;
+import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 
 public class OrmliteOptimizerIntegerParameterTest {
 
 	@Test
 	public void testOrmliteOptimizerIntegerParameters() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
-		final OptimizerDatabaseStorage storage = new OptimizerDatabaseStorage(settings);
+		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
+		final OptimizerExperimentsDatabaseStorage storage = new OptimizerExperimentsDatabaseStorage(source);
 		Assert.assertNotNull(storage);
 		{
 			final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
