@@ -13,10 +13,10 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
-public class OrmliteOptimizerTradingStrategyTest {
+public class OrmliteOptimizerExecutionInstanceTest {
 
 	@Test
-	public void testOrmliteOptimizerTradingStrategy() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteOptimizerExecutionInstance() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);
@@ -24,11 +24,22 @@ public class OrmliteOptimizerTradingStrategyTest {
 		{
 			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy();
 			Assert.assertEquals(1, storage.saveTradingStrategy(tradingStrategy).getNumLinesChanged());
+
+			final OrmliteOptimizerExecutionInstance executionInstance = new OrmliteOptimizerExecutionInstance(tradingStrategy.getId());
+			executionInstance.setIndexNumber(2);
+			executionInstance.setExecutionInstanceName("execution instance name");
+			executionInstance.setAlgorithmName("algo name");
+			executionInstance.setAlgorithmType("algo type");
+			Assert.assertEquals(1, storage.saveExecutionInstance(executionInstance).getNumLinesChanged());
 		}
 		{
 			final OrmliteOptimizerTradingStrategy copy = storage.loadTradingStrategy(1);
-			Assert.assertNotNull(copy.getPeriodFrom());
-			Assert.assertNotNull(copy.getPeriodTo());
+			final OrmliteOptimizerExecutionInstance executionInstance = storage.loadExecutionInstance(copy).get(0);
+			Assert.assertEquals(1, executionInstance.getId().intValue());
+			Assert.assertEquals(2, executionInstance.getIndexNumber());
+			Assert.assertNotNull(executionInstance.getExecutionInstanceName());
+			Assert.assertNotNull(executionInstance.getAlgorithmName());
+			Assert.assertNotNull(executionInstance.getAlgorithmType());
 			Assert.assertNotNull(copy.getCreatedAt());
 			Assert.assertNotNull(copy.getUpdatedAt());
 		}
