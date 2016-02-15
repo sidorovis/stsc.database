@@ -8,7 +8,7 @@
 	<property name="now" value="now()" dbms="mysql" />
 
 	<changeSet id="22_41_00__14_02_2016" author="ivan.sidarau@gmail.com">
-		<createTable tableName="simulations">
+		<createTable tableName="trading_strategies">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -30,7 +30,7 @@
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="simulation_id" type="int(11)">
+			<column name="trading_strategy_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="index_number" type="int(11)">
@@ -49,11 +49,11 @@
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<addForeignKeyConstraint baseColumnNames="simulation_id"
-			baseTableName="execution_instances" constraintName="fk_execution_instance_to_simulation"
-			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="simulations" />
+		<addForeignKeyConstraint baseColumnNames="trading_strategy_id"
+			baseTableName="execution_instances" constraintName="fk_execution_instance_to_trading_strategies"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="trading_strategies" />
 
-		<createTable tableName="string_variables">
+		<createTable tableName="string_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -71,10 +71,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
-			baseTableName="string_variables" constraintName="fk_string_variable_to_execution_instance"
+			baseTableName="string_arguments" constraintName="fk_string_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
-		<createTable tableName="subexecution_variables">
+		<createTable tableName="subexecution_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -89,10 +89,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
-			baseTableName="subexecution_variables" constraintName="fk_subexecution_variable_to_execution_instance"
+			baseTableName="subexecution_arguments" constraintName="fk_subexecution_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
-		<createTable tableName="integer_variables">
+		<createTable tableName="integer_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -110,10 +110,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
-			baseTableName="integer_variables" constraintName="fk_integer_variable_to_execution_instance"
+			baseTableName="integer_arguments" constraintName="fk_integer_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
-		<createTable tableName="double_variables">
+		<createTable tableName="double_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -131,7 +131,7 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
-			baseTableName="double_variables" constraintName="fk_double_variable_to_execution_instance"
+			baseTableName="double_arguments" constraintName="fk_double_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
 	</changeSet>
