@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<property name="now" value="CURRENT_TIMESTAMP()" dbms="h2" />
+	<property name="now" value="now()" dbms="mysql" />
+
+	<changeSet id="01_44_00__17_02_2016" author="ivan.sidarau@gmail.com">
+		<createTable tableName="metrics">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="trading_strategy_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="trading_strategy_id"
+			baseTableName="metrics" constraintName="fk_metric_to_trading_strategies"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="trading_strategies" />
+
+		<createTable tableName="double_metrics">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="metric_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="metric_type" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="metric_value" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="metric_id"
+			baseTableName="double_metrics" constraintName="fk_double_metric_to_metrics"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+
+		<createTable tableName="integer_metrics">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="metric_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="metric_type" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="metric_value" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="metric_id"
+			baseTableName="integer_metrics" constraintName="fk_integer_metric_to_metrics"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+
+		<createTable tableName="equity_curves">
+			<column name="id" type="int(11)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="metric_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="timestamp" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+			<column name="value" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_at" type="DATETIME" />
+			<column name="updated_at" type="DATETIME" />
+		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="metric_id"
+			baseTableName="equity_curves" constraintName="fk_equity_curves_to_metrics"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+
+	</changeSet>
+
+</databaseChangeLog>
