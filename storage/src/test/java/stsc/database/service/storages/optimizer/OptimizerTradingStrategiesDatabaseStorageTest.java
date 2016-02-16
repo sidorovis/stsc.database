@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerDoubleArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerExecutionInstance;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerIntegerArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerStringArgument;
@@ -43,6 +44,11 @@ public class OptimizerTradingStrategiesDatabaseStorageTest {
 		integerArgument.setParameterName("vvv");
 		integerArgument.setParameterValue(3757);
 		Assert.assertEquals(1, storage.saveIntegerArgument(integerArgument).getNumLinesChanged());
+
+		final OrmliteOptimizerDoubleArgument doubleArgument = new OrmliteOptimizerDoubleArgument(execution.getId());
+		doubleArgument.setParameterName("vvv");
+		doubleArgument.setParameterValue(3757.878);
+		Assert.assertEquals(1, storage.saveDoubleArgument(doubleArgument).getNumLinesChanged());
 
 		return tradingStrategy;
 	}

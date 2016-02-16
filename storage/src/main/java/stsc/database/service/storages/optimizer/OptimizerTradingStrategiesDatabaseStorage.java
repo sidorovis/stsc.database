@@ -11,6 +11,7 @@ import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 
+import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerDoubleArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerExecutionInstance;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerIntegerArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerStringArgument;
@@ -24,6 +25,7 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 	private final Dao<OrmliteOptimizerStringArgument, Integer> stringArguments;
 	private final Dao<OrmliteOptimizerSubExecutionArgument, Integer> subExecutionArguments;
 	private final Dao<OrmliteOptimizerIntegerArgument, Integer> integerArguments;
+	private final Dao<OrmliteOptimizerDoubleArgument, Integer> doubleArguments;
 
 	public OptimizerTradingStrategiesDatabaseStorage(final ConnectionSource source) throws IOException, SQLException {
 		this.tradingStrategies = DaoManager.createDao(source, OrmliteOptimizerTradingStrategy.class);
@@ -31,11 +33,13 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 		this.stringArguments = DaoManager.createDao(source, OrmliteOptimizerStringArgument.class);
 		this.subExecutionArguments = DaoManager.createDao(source, OrmliteOptimizerSubExecutionArgument.class);
 		this.integerArguments = DaoManager.createDao(source, OrmliteOptimizerIntegerArgument.class);
+		this.doubleArguments = DaoManager.createDao(source, OrmliteOptimizerDoubleArgument.class);
 		Validate.isTrue(tradingStrategies.isTableExists(), "OrmliteOptimizerTradingStrategy table should exists");
 		Validate.isTrue(executionInstances.isTableExists(), "OrmliteOptimizerExecutionInstance table should exists");
 		Validate.isTrue(stringArguments.isTableExists(), "OrmliteOptimizerStringArguments table should exists");
 		Validate.isTrue(subExecutionArguments.isTableExists(), "OrmliteOptimizerSubExecutionArguments table should exists");
 		Validate.isTrue(integerArguments.isTableExists(), "OrmliteOptimizerIntegerArguments table should exists");
+		Validate.isTrue(doubleArguments.isTableExists(), "OrmliteOptimizerDoubleArguments table should exists");
 	}
 
 	public CreateOrUpdateStatus saveTradingStrategy(final OrmliteOptimizerTradingStrategy tradingStrategy) throws SQLException {
@@ -86,6 +90,16 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 
 	public List<OrmliteOptimizerIntegerArgument> loadIntegerArguments(final OrmliteOptimizerExecutionInstance executionInstance) throws SQLException {
 		return integerArguments.queryForEq("execution_instance_id", executionInstance.getId());
+	}
+
+	public CreateOrUpdateStatus saveDoubleArgument(final OrmliteOptimizerDoubleArgument doubleArgument) throws SQLException {
+		doubleArgument.setCreatedAt();
+		doubleArgument.setUpdatedAt();
+		return doubleArguments.createOrUpdate(doubleArgument);
+	}
+
+	public List<OrmliteOptimizerDoubleArgument> loadDoubleArguments(final OrmliteOptimizerExecutionInstance executionInstance) throws SQLException {
+		return doubleArguments.queryForEq("execution_instance_id", executionInstance.getId());
 	}
 
 }
