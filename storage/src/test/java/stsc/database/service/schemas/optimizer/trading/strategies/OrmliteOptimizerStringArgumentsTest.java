@@ -13,10 +13,10 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
-public class OrmliteOptimizerExecutionInstanceTest {
+public class OrmliteOptimizerStringArgumentsTest {
 
 	@Test
-	public void testOrmliteOptimizerExecutionInstance() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteOptimizerStringArguments() throws SQLException, LiquibaseException, IOException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);
@@ -31,17 +31,22 @@ public class OrmliteOptimizerExecutionInstanceTest {
 			executionInstance.setAlgorithmName("algo name");
 			executionInstance.setAlgorithmType("algo type");
 			Assert.assertEquals(1, storage.saveExecutionInstance(executionInstance).getNumLinesChanged());
+			
+			final OrmliteOptimizerStringArguments stringArgument = new OrmliteOptimizerStringArguments(executionInstance.getId());
+			stringArgument.setParameterName("p_name");
+			stringArgument.setParameterValue("p_value");
+			
+			Assert.assertEquals(1, storage.saveStringArgument(stringArgument).getNumLinesChanged());
 		}
 		{
-			final OrmliteOptimizerTradingStrategy copy = storage.loadTradingStrategy(1);
-			final OrmliteOptimizerExecutionInstance executionInstance = storage.loadExecutionInstance(copy).get(0);
-			Assert.assertEquals(1, executionInstance.getId().intValue());
-			Assert.assertEquals(2, executionInstance.getIndexNumber());
-			Assert.assertNotNull(executionInstance.getExecutionInstanceName());
-			Assert.assertNotNull(executionInstance.getAlgorithmName());
-			Assert.assertNotNull(executionInstance.getAlgorithmType());
-			Assert.assertNotNull(executionInstance.getCreatedAt());
-			Assert.assertNotNull(executionInstance.getUpdatedAt());
+			final OrmliteOptimizerTradingStrategy ts = storage.loadTradingStrategy(1);
+			final OrmliteOptimizerExecutionInstance executionInstance = storage.loadExecutionInstance(ts).get(0);
+			final OrmliteOptimizerStringArguments stringArguments = storage.loadStringArguments(executionInstance).get(0);
+			Assert.assertEquals(1, stringArguments.getId().intValue());
+			Assert.assertEquals("p_name", stringArguments.getParameterName());
+			Assert.assertEquals("p_value", stringArguments.getParameterValue());
+			Assert.assertNotNull(stringArguments.getCreatedAt());
+			Assert.assertNotNull(stringArguments.getUpdatedAt());
 		}
 		settings.dropAll();
 	}
