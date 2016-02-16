@@ -12,22 +12,26 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerExecutionInstance;
-import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerStringArguments;
+import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerStringArgument;
+import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerSubExecutionArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerTradingStrategy;
 
 public final class OptimizerTradingStrategiesDatabaseStorage {
 
 	private final Dao<OrmliteOptimizerTradingStrategy, Integer> tradingStrategies;
 	private final Dao<OrmliteOptimizerExecutionInstance, Integer> executionInstances;
-	private final Dao<OrmliteOptimizerStringArguments, Integer> stringArguments;
+	private final Dao<OrmliteOptimizerStringArgument, Integer> stringArguments;
+	private final Dao<OrmliteOptimizerSubExecutionArgument, Integer> subExecutionArguments;
 
 	public OptimizerTradingStrategiesDatabaseStorage(final ConnectionSource source) throws IOException, SQLException {
 		this.tradingStrategies = DaoManager.createDao(source, OrmliteOptimizerTradingStrategy.class);
 		this.executionInstances = DaoManager.createDao(source, OrmliteOptimizerExecutionInstance.class);
-		this.stringArguments = DaoManager.createDao(source, OrmliteOptimizerStringArguments.class);
+		this.stringArguments = DaoManager.createDao(source, OrmliteOptimizerStringArgument.class);
+		this.subExecutionArguments = DaoManager.createDao(source, OrmliteOptimizerSubExecutionArgument.class);
 		Validate.isTrue(tradingStrategies.isTableExists(), "OrmliteOptimizerTradingStrategy table should exists");
 		Validate.isTrue(executionInstances.isTableExists(), "OrmliteOptimizerExecutionInstance table should exists");
 		Validate.isTrue(stringArguments.isTableExists(), "OrmliteOptimizerStringArguments table should exists");
+		Validate.isTrue(subExecutionArguments.isTableExists(), "OrmliteOptimizerSubExecutionArguments table should exists");
 	}
 
 	public CreateOrUpdateStatus saveTradingStrategy(final OrmliteOptimizerTradingStrategy tradingStrategy) throws SQLException {
@@ -50,14 +54,24 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 		return executionInstances.queryForEq("trading_strategy_id", tradingStrategy.getId());
 	}
 
-	public CreateOrUpdateStatus saveStringArgument(final OrmliteOptimizerStringArguments stringArgument) throws SQLException {
+	public CreateOrUpdateStatus saveStringArgument(final OrmliteOptimizerStringArgument stringArgument) throws SQLException {
 		stringArgument.setCreatedAt();
 		stringArgument.setUpdatedAt();
 		return stringArguments.createOrUpdate(stringArgument);
 	}
 
-	public List<OrmliteOptimizerStringArguments> loadStringArguments(final OrmliteOptimizerExecutionInstance executionInstance) throws SQLException {
+	public List<OrmliteOptimizerStringArgument> loadStringArguments(final OrmliteOptimizerExecutionInstance executionInstance) throws SQLException {
 		return stringArguments.queryForEq("execution_instance_id", executionInstance.getId());
+	}
+
+	public CreateOrUpdateStatus saveSubExecutionArgument(final OrmliteOptimizerSubExecutionArgument subExecutionArgument) throws SQLException {
+		subExecutionArgument.setCreatedAt();
+		subExecutionArgument.setUpdatedAt();
+		return subExecutionArguments.createOrUpdate(subExecutionArgument);
+	}
+
+	public List<OrmliteOptimizerSubExecutionArgument> loadSubExecutionArguments(final OrmliteOptimizerExecutionInstance executionInstance) throws SQLException {
+		return subExecutionArguments.queryForEq("execution_instance_id", executionInstance.getId());
 	}
 
 }

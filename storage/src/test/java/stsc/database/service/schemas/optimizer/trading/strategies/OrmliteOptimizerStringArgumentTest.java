@@ -13,7 +13,7 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
-public class OrmliteOptimizerStringArgumentsTest {
+public class OrmliteOptimizerStringArgumentTest {
 
 	@Test
 	public void testOrmliteOptimizerStringArguments() throws SQLException, LiquibaseException, IOException {
@@ -32,7 +32,7 @@ public class OrmliteOptimizerStringArgumentsTest {
 			executionInstance.setAlgorithmType("algo type");
 			Assert.assertEquals(1, storage.saveExecutionInstance(executionInstance).getNumLinesChanged());
 			
-			final OrmliteOptimizerStringArguments stringArgument = new OrmliteOptimizerStringArguments(executionInstance.getId());
+			final OrmliteOptimizerStringArgument stringArgument = new OrmliteOptimizerStringArgument(executionInstance.getId());
 			stringArgument.setParameterName("p_name");
 			stringArgument.setParameterValue("p_value");
 			
@@ -41,7 +41,7 @@ public class OrmliteOptimizerStringArgumentsTest {
 		{
 			final OrmliteOptimizerTradingStrategy ts = storage.loadTradingStrategy(1);
 			final OrmliteOptimizerExecutionInstance executionInstance = storage.loadExecutionInstance(ts).get(0);
-			final OrmliteOptimizerStringArguments stringArguments = storage.loadStringArguments(executionInstance).get(0);
+			final OrmliteOptimizerStringArgument stringArguments = storage.loadStringArguments(executionInstance).get(0);
 			Assert.assertEquals(1, stringArguments.getId().intValue());
 			Assert.assertEquals("p_name", stringArguments.getParameterName());
 			Assert.assertEquals("p_value", stringArguments.getParameterValue());

@@ -7,7 +7,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "string_arguments")
-public final class OrmliteOptimizerStringArguments {
+public final class OrmliteOptimizerStringArgument {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -27,10 +27,10 @@ public final class OrmliteOptimizerStringArguments {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerStringArguments() {
+	private OrmliteOptimizerStringArgument() {
 	}
 
-	public OrmliteOptimizerStringArguments(int executionInstanceId) {
+	public OrmliteOptimizerStringArgument(int executionInstanceId) {
 		this();
 		// this.userId = 0;
 		this.executionInstanceId = executionInstanceId;
