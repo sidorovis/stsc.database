@@ -33,7 +33,12 @@ public final class OptimizerDatabaseSettings {
 	}
 
 	public static OptimizerDatabaseSettings test() throws IOException {
-		return new OptimizerDatabaseSettings(configFolder + "test.properties");
+		if (new File(configFolder + "test.properties").exists()) {
+			return new OptimizerDatabaseSettings(configFolder + "test.properties");
+		} else {
+			// for tests from another modules we would use settings from resource folder
+			return new OptimizerDatabaseSettings(OptimizerDatabaseSettings.class.getResourceAsStream("test.properties"));
+		}
 	}
 
 	public OptimizerDatabaseSettings(final String filePath) throws IOException {
