@@ -8,7 +8,7 @@
 	<property name="now" value="now()" dbms="mysql" />
 
 	<changeSet id="01_44_00__17_02_2016" author="ivan.sidarau@gmail.com">
-		<createTable tableName="metrics">
+		<createTable tableName="metrics_tuples">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -21,14 +21,14 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="trading_strategy_id"
-			baseTableName="metrics" constraintName="fk_metric_to_trading_strategies"
+			baseTableName="metrics_tuples" constraintName="fk_metrics_tuple_to_trading_strategy"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="trading_strategies" />
 
 		<createTable tableName="double_metrics">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="metric_id" type="int(11)">
+			<column name="metrics_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="metric_type" type="varchar(255)">
@@ -41,15 +41,15 @@
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<addForeignKeyConstraint baseColumnNames="metric_id"
-			baseTableName="double_metrics" constraintName="fk_double_metric_to_metrics"
-			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+		<addForeignKeyConstraint baseColumnNames="metrics_id"
+			baseTableName="double_metrics" constraintName="fk_double_metrics_to_metrics_tuple"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics_tuples" />
 
 		<createTable tableName="integer_metrics">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="metric_id" type="int(11)">
+			<column name="metrics_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="metric_type" type="varchar(255)">
@@ -62,15 +62,15 @@
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<addForeignKeyConstraint baseColumnNames="metric_id"
-			baseTableName="integer_metrics" constraintName="fk_integer_metric_to_metrics"
-			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+		<addForeignKeyConstraint baseColumnNames="metrics_id"
+			baseTableName="integer_metrics" constraintName="fk_integer_metrics_to_metrics_tuple"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics_tuples" />
 
 		<createTable tableName="equity_curves">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
-			<column name="metric_id" type="int(11)">
+			<column name="metrics_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="timestamp" type="DATETIME">
@@ -83,9 +83,9 @@
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
 
-		<addForeignKeyConstraint baseColumnNames="metric_id"
-			baseTableName="equity_curves" constraintName="fk_equity_curves_to_metrics"
-			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics" />
+		<addForeignKeyConstraint baseColumnNames="metrics_id"
+			baseTableName="equity_curves" constraintName="fk_equity_curves_to_metrics_tuple"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics_tuples" />
 
 	</changeSet>
 

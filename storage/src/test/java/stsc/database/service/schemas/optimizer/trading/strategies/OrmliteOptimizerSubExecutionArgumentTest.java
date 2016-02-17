@@ -13,7 +13,7 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
-public class OrmliteOptimizerSubExecutionArgumentsTest {
+public class OrmliteOptimizerSubExecutionArgumentTest {
 
 	@Test
 	public void testOrmliteOptimizerSubExecutionArguments() throws SQLException, LiquibaseException, IOException {
