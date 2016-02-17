@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "double_metrics")
-public final class OrmliteOptimizerDoubleMetric {
+@DatabaseTable(tableName = "integer_metrics")
+public final class OrmliteOptimizerIntegerMetric {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -19,7 +19,7 @@ public final class OrmliteOptimizerDoubleMetric {
 	private String metricType;
 
 	@DatabaseField(columnName = "metric_value", canBeNull = false)
-	private Double metricValue;
+	private Integer metricValue;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -27,10 +27,10 @@ public final class OrmliteOptimizerDoubleMetric {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerDoubleMetric() {
+	private OrmliteOptimizerIntegerMetric() {
 	}
 
-	public OrmliteOptimizerDoubleMetric(int metricsTupleId) {
+	public OrmliteOptimizerIntegerMetric(int metricsTupleId) {
 		this();
 		this.metricsTupleId = metricsTupleId;
 	}
@@ -47,11 +47,11 @@ public final class OrmliteOptimizerDoubleMetric {
 		this.metricType = metricType;
 	}
 
-	public double getMetricValue() {
+	public int getMetricValue() {
 		return metricValue;
 	}
 
-	public void setMetricValue(double metricValue) {
+	public void setMetricValue(int metricValue) {
 		this.metricValue = metricValue;
 	}
 
