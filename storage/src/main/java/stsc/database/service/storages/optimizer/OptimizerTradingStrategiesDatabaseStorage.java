@@ -9,10 +9,12 @@ import org.apache.commons.lang3.Validate;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerDoubleArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerDoubleMetric;
+import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerEquityCurveValue;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerExecutionInstance;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerIntegerArgument;
 import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimizerIntegerMetric;
@@ -33,6 +35,7 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 	private final Dao<OrmliteOptimizerMetricsTuple, Integer> metricsTuples;
 	private final Dao<OrmliteOptimizerDoubleMetric, Integer> doubleMetrics;
 	private final Dao<OrmliteOptimizerIntegerMetric, Integer> integerMetrics;
+	private final Dao<OrmliteOptimizerEquityCurveValue, Integer> equityCurveValues;
 
 	public OptimizerTradingStrategiesDatabaseStorage(final ConnectionSource source) throws IOException, SQLException {
 		this.tradingStrategies = DaoManager.createDao(source, OrmliteOptimizerTradingStrategy.class);
@@ -45,6 +48,7 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 		this.metricsTuples = DaoManager.createDao(source, OrmliteOptimizerMetricsTuple.class);
 		this.doubleMetrics = DaoManager.createDao(source, OrmliteOptimizerDoubleMetric.class);
 		this.integerMetrics = DaoManager.createDao(source, OrmliteOptimizerIntegerMetric.class);
+		this.equityCurveValues = DaoManager.createDao(source, OrmliteOptimizerEquityCurveValue.class);
 
 		Validate.isTrue(tradingStrategies.isTableExists(), "OrmliteOptimizerTradingStrategy table should exists");
 		Validate.isTrue(executionInstances.isTableExists(), "OrmliteOptimizerExecutionInstance table should exists");
@@ -56,6 +60,7 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 		Validate.isTrue(metricsTuples.isTableExists(), "OrmliteOptimizerMetricsTuples table should exists");
 		Validate.isTrue(doubleMetrics.isTableExists(), "OrmliteOptimizerDoubleMetric table should exists");
 		Validate.isTrue(integerMetrics.isTableExists(), "OrmliteOptimizerIntegerMetric table should exists");
+		Validate.isTrue(equityCurveValues.isTableExists(), "OrmliteOptimizerEquityCurveValue table should exists");
 	}
 
 	public CreateOrUpdateStatus saveTradingStrategy(final OrmliteOptimizerTradingStrategy tradingStrategy) throws SQLException {
@@ -146,6 +151,20 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 
 	public List<OrmliteOptimizerIntegerMetric> loadIntegerMetrics(final OrmliteOptimizerMetricsTuple metricsTuple) throws SQLException {
 		return integerMetrics.queryForEq("metrics_tuple_id", metricsTuple.getId());
+	}
+
+	public CreateOrUpdateStatus saveEquityCurveValue(final OrmliteOptimizerEquityCurveValue equityCurveValue) throws SQLException {
+		equityCurveValue.setCreatedAt();
+		equityCurveValue.setUpdatedAt();
+		return equityCurveValues.createOrUpdate(equityCurveValue);
+	}
+
+	public List<OrmliteOptimizerEquityCurveValue> loadEquityCurveValues(final OrmliteOptimizerMetricsTuple metricsTuple) throws SQLException {
+		final QueryBuilder<OrmliteOptimizerEquityCurveValue, Integer> queryBuilder = equityCurveValues.queryBuilder();
+		queryBuilder.setWhere(equityCurveValues.queryBuilder(). //
+				where().eq("metrics_tuple_id", metricsTuple.getId()));
+		queryBuilder.orderBy("timestamp", true);
+		return equityCurveValues.query(queryBuilder.prepare());
 	}
 
 }

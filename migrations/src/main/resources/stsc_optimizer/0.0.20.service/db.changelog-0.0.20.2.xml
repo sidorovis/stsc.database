@@ -66,7 +66,7 @@
 			baseTableName="integer_metrics" constraintName="fk_integer_metrics_to_metrics_tuple"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics_tuples" />
 
-		<createTable tableName="equity_curves">
+		<createTable tableName="equity_curve_values">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -84,7 +84,7 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="metrics_tuple_id"
-			baseTableName="equity_curves" constraintName="fk_equity_curves_to_metrics_tuple"
+			baseTableName="equity_curve_values" constraintName="fk_equity_curve_values_to_metrics_tuple"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="metrics_tuples" />
 
 	</changeSet>
