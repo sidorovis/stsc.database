@@ -24,11 +24,11 @@ public final class OptimizerDatabaseStorage {
 		optimizerTradingStrategiesDatabaseStorage = new OptimizerTradingStrategiesDatabaseStorage(source);
 	}
 
-	public OptimizerExperimentsDatabaseStorage getExperiments() {
+	public OptimizerExperimentsDatabaseStorage getExperimentsStorage() {
 		return optimizerExperimentsDatabaseStorage;
 	}
 
-	public OptimizerTradingStrategiesDatabaseStorage getOptimizerTradingStrategiesDatabaseStorage() {
+	public OptimizerTradingStrategiesDatabaseStorage getTradingStrategiesStorage() {
 		return optimizerTradingStrategiesDatabaseStorage;
 	}
 
