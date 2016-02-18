@@ -101,7 +101,10 @@
 			<groupId>stsc</groupId>
 			<artifactId>stsc.storage</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>stsc</groupId>
+			<artifactId>stsc.database.storage</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

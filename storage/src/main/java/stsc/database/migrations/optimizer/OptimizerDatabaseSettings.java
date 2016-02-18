@@ -29,6 +29,8 @@ public final class OptimizerDatabaseSettings {
 	private final String password;
 
 	public static OptimizerDatabaseSettings development() throws IOException {
+//		stsc.cha
+		
 		return new OptimizerDatabaseSettings(configFolder + "development.properties");
 	}
 
