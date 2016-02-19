@@ -7,4 +7,3 @@
 	<include file="${project.basedir}/target/classes/stsc/changelogs/feedzilla_downloader/0.0.15.service/db.changelog-0.0.15.xml" />
 
 </databaseChangeLog> 
-                      

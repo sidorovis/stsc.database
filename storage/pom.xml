@@ -103,7 +103,7 @@
 		</dependency>
 		<dependency>
 			<groupId>stsc</groupId>
-			<artifactId>stsc.database.storage</artifactId>
+			<artifactId>stsc.database.migrations</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
