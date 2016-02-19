@@ -7,10 +7,6 @@ import java.net.URISyntaxException;
  */
 public final class StscOptimizerConfig {
 
-	// public final String getChangeLogFile() throws URISyntaxException {
-	// return StscOptimizerConfig.class.getResource("db.changelog.xml").toURI().getRawPath();
-	// }
-
 	public final String getTestConfigFile() throws URISyntaxException {
 		return StscOptimizerConfig.class.getResource("test.properties").toURI().getRawPath();
 	}
