@@ -1,6 +1,7 @@
 package stsc.database.service.storages;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import liquibase.exception.LiquibaseException;
@@ -15,7 +16,7 @@ import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
 public class YahooDatabaseSettingsStorageTest {
 
 	@Test
-	public void testYahooDatabaseSettingsStorage() throws IOException, SQLException, LiquibaseException, InterruptedException {
+	public void testYahooDatabaseSettingsStorage() throws IOException, SQLException, LiquibaseException, InterruptedException, URISyntaxException {
 		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
 		Assert.assertNotNull(storage);

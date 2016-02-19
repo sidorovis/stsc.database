@@ -1,6 +1,7 @@
 package stsc.database.service.storages.optimizer;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import org.junit.Assert;
@@ -54,7 +55,7 @@ public class OptimizerTradingStrategiesDatabaseStorageTest {
 	}
 
 	@Test
-	public void testOptimizerDatabaseStorage() throws SQLException, LiquibaseException, IOException {
+	public void testOptimizerDatabaseStorage() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final OptimizerDatabaseSettings databaseSettings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(databaseSettings.getJdbcUrl(), databaseSettings.getLogin(), databaseSettings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);

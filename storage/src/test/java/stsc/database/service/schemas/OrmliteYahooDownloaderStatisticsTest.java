@@ -2,6 +2,7 @@ package stsc.database.service.schemas;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class OrmliteYahooDownloaderStatisticsTest {
 	}
 
 	@Test
-	public void testOrmliteYahooDatafeedSettings() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteYahooDatafeedSettings() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
@@ -60,7 +61,7 @@ public class OrmliteYahooDownloaderStatisticsTest {
 	}
 
 	@Test
-	public void testOrmliteYahooDatafeedSettingsGetStatisticsByPid() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteYahooDatafeedSettingsGetStatisticsByPid() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);

@@ -1,6 +1,7 @@
 package stsc.database.service.schemas.optimizer.trading.strategies;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import org.junit.Assert;
@@ -17,7 +18,7 @@ import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDataba
 public class OrmliteOptimizerDoubleMetricTest {
 
 	@Test
-	public void testOrmliteOptimizerDoubleMetric() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteOptimizerDoubleMetric() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,24 +17,25 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.FileSystemResourceAccessor;
+import stsc.changelogs.yahoo_downloader.YahooDownloaderChangelog;
+import stsc.config.yahoo_downloader.YahooDownloaderConfig;
 
 public final class YahooDownloaderDatabaseSettings {
 
-	public final static String configFolder = "../config/yahoo_downloader/";
-	public final static String dbChangeLog = "../migrations/target/classes/yahoo_downloader/";
-	public final static String dbChangeLogFile = "db.changelog.xml";
+	private final static YahooDownloaderConfig YAHOO_DOWNLOADER_CONFIG = new YahooDownloaderConfig();
+	private final static YahooDownloaderChangelog YAHOO_DOWNLOADER_CHANGELOG = new YahooDownloaderChangelog();
 
 	private final String jdbcDriver;
 	private final String jdbcUrl;
 	private final String login;
 	private final String password;
 
-	public static YahooDownloaderDatabaseSettings development() throws IOException {
-		return new YahooDownloaderDatabaseSettings(configFolder + "development.properties");
+	public static YahooDownloaderDatabaseSettings development() throws IOException, URISyntaxException {
+		return new YahooDownloaderDatabaseSettings(YAHOO_DOWNLOADER_CONFIG.getDevelopmentConfigFile());
 	}
 
-	public static YahooDownloaderDatabaseSettings test() throws IOException {
-		return new YahooDownloaderDatabaseSettings(configFolder + "test.properties");
+	public static YahooDownloaderDatabaseSettings test() throws IOException, URISyntaxException {
+		return new YahooDownloaderDatabaseSettings(YAHOO_DOWNLOADER_CONFIG.getTestConfigFile());
 	}
 
 	public YahooDownloaderDatabaseSettings(final String filePath) throws IOException {
@@ -68,11 +70,12 @@ public final class YahooDownloaderDatabaseSettings {
 		return password;
 	}
 
-	public YahooDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException {
+	public YahooDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
+				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.update((String) null);
 		liquibase.validate();
 		database.commit();
@@ -81,11 +84,12 @@ public final class YahooDownloaderDatabaseSettings {
 		return this;
 	}
 
-	public YahooDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException {
+	public YahooDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
+				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.dropAll();
 		liquibase.validate();
 		database.commit();

@@ -1,10 +1,12 @@
 package stsc.database.migrations;
 
 import java.io.DataInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,24 +18,25 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.FileSystemResourceAccessor;
+import stsc.changelogs.feedzilla_downloader.FeedzillaDownloaderChangelog;
+import stsc.config.feedzilla_downloader.FeedzillaDownloaderConfig;
 
 public final class FeedzillaDownloaderDatabaseSettings {
 
-	public final static String configFolder = "../config/feedzilla_downloader/";
-	public final static String dbChangeLog = "../migrations/target/classes/feedzilla_downloader/";
-	public final static String dbChangeLogFile = "db.changelog.xml";
-
+	private final static FeedzillaDownloaderConfig FEEDZILLA_DOWNLOADER_CONFIG = new FeedzillaDownloaderConfig();
+	private final static FeedzillaDownloaderChangelog FEEDZILLA_DOWNLOADER_CHANGELOG = new FeedzillaDownloaderChangelog();
+	
 	private final String jdbcDriver;
 	private final String jdbcUrl;
 	private final String login;
 	private final String password;
 
-	public static FeedzillaDownloaderDatabaseSettings development() throws IOException {
-		return new FeedzillaDownloaderDatabaseSettings(configFolder + "development.properties");
+	public static FeedzillaDownloaderDatabaseSettings development() throws IOException, URISyntaxException {
+		return new FeedzillaDownloaderDatabaseSettings(FEEDZILLA_DOWNLOADER_CONFIG.getDevelopmentConfigFile());
 	}
 
-	public static FeedzillaDownloaderDatabaseSettings test() throws IOException {
-		return new FeedzillaDownloaderDatabaseSettings(configFolder + "test.properties");
+	public static FeedzillaDownloaderDatabaseSettings test() throws IOException, URISyntaxException {
+		return new FeedzillaDownloaderDatabaseSettings(FEEDZILLA_DOWNLOADER_CONFIG.getTestConfigFile());
 	}
 
 	public FeedzillaDownloaderDatabaseSettings(final String filePath) throws IOException {
@@ -68,11 +71,12 @@ public final class FeedzillaDownloaderDatabaseSettings {
 		return password;
 	}
 
-	public FeedzillaDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException {
+	public FeedzillaDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = FEEDZILLA_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(FEEDZILLA_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
+				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.update((String) null);
 		liquibase.validate();
 		database.commit();
@@ -81,11 +85,12 @@ public final class FeedzillaDownloaderDatabaseSettings {
 		return this;
 	}
 
-	public FeedzillaDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException {
+	public FeedzillaDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = FEEDZILLA_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(FEEDZILLA_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
+				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.dropAll();
 		liquibase.validate();
 		database.commit();

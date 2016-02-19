@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,31 +17,25 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.FileSystemResourceAccessor;
+import stsc.changelogs.stsc_optimizer.StscOptimizerChangelog;
+import stsc.config.stsc_optimizer.StscOptimizerConfig;
 
 public final class OptimizerDatabaseSettings {
 
-	public final static String configFolder = "../config/stsc_optimizer/";
-	public final static String dbChangeLog = "../migrations/target/classes/stsc_optimizer/";
-	public final static String dbChangeLogFile = "db.changelog.xml";
+	private static final StscOptimizerConfig STSC_OPTIMIZER_CONFIG = new StscOptimizerConfig();
+	private static final StscOptimizerChangelog STSC_OPTIMIZER_CHANGELOG = new StscOptimizerChangelog();
 
 	private final String jdbcDriver;
 	private final String jdbcUrl;
 	private final String login;
 	private final String password;
 
-	public static OptimizerDatabaseSettings development() throws IOException {
-//		stsc.cha
-		
-		return new OptimizerDatabaseSettings(configFolder + "development.properties");
+	public static OptimizerDatabaseSettings development() throws IOException, URISyntaxException {
+		return new OptimizerDatabaseSettings(STSC_OPTIMIZER_CONFIG.getDevelopmentConfigFile());
 	}
 
-	public static OptimizerDatabaseSettings test() throws IOException {
-		if (new File(configFolder + "test.properties").exists()) {
-			return new OptimizerDatabaseSettings(configFolder + "test.properties");
-		} else {
-			// for tests from another modules we would use settings from resource folder
-			return new OptimizerDatabaseSettings(OptimizerDatabaseSettings.class.getResourceAsStream("test.properties"));
-		}
+	public static OptimizerDatabaseSettings test() throws IOException, URISyntaxException {
+		return new OptimizerDatabaseSettings(STSC_OPTIMIZER_CONFIG.getTestConfigFile());
 	}
 
 	public OptimizerDatabaseSettings(final String filePath) throws IOException {
@@ -75,11 +70,11 @@ public final class OptimizerDatabaseSettings {
 		return password;
 	}
 
-	public OptimizerDatabaseSettings migrate() throws SQLException, LiquibaseException {
+	public OptimizerDatabaseSettings migrate() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = STSC_OPTIMIZER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(STSC_OPTIMIZER_CHANGELOG.getDbChangelog().toString(), new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.update((String) null);
 		liquibase.validate();
 		database.commit();
@@ -88,11 +83,11 @@ public final class OptimizerDatabaseSettings {
 		return this;
 	}
 
-	public OptimizerDatabaseSettings dropAll() throws SQLException, LiquibaseException {
+	public OptimizerDatabaseSettings dropAll() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = new File(dbChangeLog);
-		final Liquibase liquibase = new Liquibase(dbChangeLogFile, new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final File parentPath = STSC_OPTIMIZER_CHANGELOG.getDbChangelog().getParent().toFile();
+		final Liquibase liquibase = new Liquibase(STSC_OPTIMIZER_CHANGELOG.getDbChangelog().toString(), new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
 		liquibase.dropAll();
 		liquibase.validate();
 		database.commit();

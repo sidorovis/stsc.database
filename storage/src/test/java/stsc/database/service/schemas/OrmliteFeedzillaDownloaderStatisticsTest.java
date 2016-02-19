@@ -2,6 +2,7 @@ package stsc.database.service.schemas;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +50,7 @@ public class OrmliteFeedzillaDownloaderStatisticsTest {
 	}
 
 	@Test
-	public void testOrmliteFeedzillaDatafeedSettings() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteFeedzillaDatafeedSettings() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final FeedzillaDownloaderDatabaseSettings settings = FeedzillaDownloaderDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final FeedzillaDownloaderDatabaseStorage storage = new FeedzillaDownloaderDatabaseStorage(settings);
@@ -59,7 +60,7 @@ public class OrmliteFeedzillaDownloaderStatisticsTest {
 	}
 
 	@Test
-	public void testOrmliteFeedzillaDatafeedSettingsGetStatisticsByPid() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteFeedzillaDatafeedSettingsGetStatisticsByPid() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final FeedzillaDownloaderDatabaseSettings settings = FeedzillaDownloaderDatabaseSettings.test().dropAll().migrate();
 		final Date d = create(settings);
 		final FeedzillaDownloaderDatabaseStorage storage = new FeedzillaDownloaderDatabaseStorage(settings);

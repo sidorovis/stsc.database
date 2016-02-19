@@ -1,6 +1,7 @@
 package stsc.database.service.schemas.optimizer.experiments;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import org.junit.Assert;
@@ -19,7 +20,7 @@ import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStor
 public class OrmliteOptimizerStringParameterTest {
 
 	@Test
-	public void testOrmliteOptimizerStringParameters() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteOptimizerStringParameters() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerExperimentsDatabaseStorage storage = new OptimizerExperimentsDatabaseStorage(source);

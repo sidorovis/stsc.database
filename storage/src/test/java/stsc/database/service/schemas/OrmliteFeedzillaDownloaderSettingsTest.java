@@ -1,6 +1,7 @@
 package stsc.database.service.schemas;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import liquibase.exception.LiquibaseException;
@@ -14,7 +15,7 @@ import stsc.database.service.storages.FeedzillaDownloaderDatabaseStorage;
 public class OrmliteFeedzillaDownloaderSettingsTest {
 
 	@Test
-	public void testOrmliteFeedzillaDatafeedSettings() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteFeedzillaDatafeedSettings() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final FeedzillaDownloaderDatabaseSettings settings = FeedzillaDownloaderDatabaseSettings.test().dropAll().migrate();
 		final FeedzillaDownloaderDatabaseStorage storage = new FeedzillaDownloaderDatabaseStorage(settings);
 		Assert.assertNotNull(storage);

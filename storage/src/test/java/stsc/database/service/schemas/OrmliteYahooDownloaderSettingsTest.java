@@ -1,6 +1,7 @@
 package stsc.database.service.schemas;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import liquibase.exception.LiquibaseException;
@@ -15,7 +16,7 @@ import stsc.database.service.storages.YahooDownloaderDatabaseStorage;
 public class OrmliteYahooDownloaderSettingsTest {
 
 	@Test
-	public void testOrmliteYahooDatafeedSettings() throws SQLException, LiquibaseException, IOException {
+	public void testOrmliteYahooDatafeedSettings() throws SQLException, LiquibaseException, IOException, URISyntaxException {
 		final YahooDownloaderDatabaseSettings settings = YahooDownloaderDatabaseSettings.test().dropAll().migrate();
 		final YahooDownloaderDatabaseStorage storage = new YahooDownloaderDatabaseStorage(settings);
 		Assert.assertNotNull(storage);
