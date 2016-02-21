@@ -11,6 +11,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.CreateOrUpdateStatus;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleParameter;
@@ -113,7 +114,12 @@ public final class OptimizerExperimentsDatabaseStorage {
 	}
 
 	public List<OrmliteOptimizerExecution> loadExecutions(OrmliteOptimizerExperiment experiment) throws SQLException {
-		return executions.queryForEq("experiment_id", experiment.getId());
+		final QueryBuilder<OrmliteOptimizerExecution, Integer> queryBuilder = executions.queryBuilder();
+		queryBuilder.setWhere(executions.queryBuilder(). //
+				where().eq("experiment_id", experiment.getId()));
+		queryBuilder.orderBy("index_number", true);
+
+		return queryBuilder.query();
 	}
 
 	public CreateOrUpdateStatus saveStringParameter(OrmliteOptimizerStringParameter newStringParameter) throws SQLException {

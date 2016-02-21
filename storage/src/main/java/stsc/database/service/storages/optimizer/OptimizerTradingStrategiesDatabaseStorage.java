@@ -69,6 +69,10 @@ public final class OptimizerTradingStrategiesDatabaseStorage {
 		return tradingStrategies.createOrUpdate(tradingStrategy);
 	}
 
+	public List<OrmliteOptimizerTradingStrategy> loadTradingStrategies() throws SQLException {
+		return tradingStrategies.queryForAll();
+	}
+
 	public OrmliteOptimizerTradingStrategy loadTradingStrategy(Integer id) throws SQLException {
 		return tradingStrategies.queryForId(id);
 	}
