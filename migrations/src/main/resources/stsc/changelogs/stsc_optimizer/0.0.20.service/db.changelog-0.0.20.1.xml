@@ -15,6 +15,9 @@
 			<column name="user_id" type="int(11)" defaultValueNumeric="0">
 				<constraints nullable="false" />
 			</column>
+			<column name="experiment_internal_id" type="int(11)" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
 			<column name="period_from" type="DATETIME" >
 				<constraints nullable="false" />
 			</column>

@@ -27,7 +27,7 @@ public class OrmliteOptimizerEquityCurveValueTest {
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);
 		Assert.assertNotNull(storage);
 		{
-			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy();
+			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(0);
 			Assert.assertEquals(1, storage.saveTradingStrategy(tradingStrategy).getNumLinesChanged());
 
 			final OrmliteOptimizerMetricsTuple metricsTuple = new OrmliteOptimizerMetricsTuple(tradingStrategy.getId());

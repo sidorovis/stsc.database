@@ -22,8 +22,9 @@ import stsc.database.service.schemas.optimizer.trading.strategies.OrmliteOptimiz
 public class OptimizerTradingStrategiesDatabaseStorageTest {
 
 	private OrmliteOptimizerTradingStrategy addTradingStrategy(final OptimizerTradingStrategiesDatabaseStorage storage) throws SQLException {
-		final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy();
+		final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(56);
 		Assert.assertEquals(1, storage.saveTradingStrategy(tradingStrategy).getNumLinesChanged());
+		Assert.assertEquals(56, tradingStrategy.getExperimentInternalId());
 
 		final OrmliteOptimizerExecutionInstance execution = new OrmliteOptimizerExecutionInstance(tradingStrategy.getId());
 		execution.setAlgorithmName("algo_name");

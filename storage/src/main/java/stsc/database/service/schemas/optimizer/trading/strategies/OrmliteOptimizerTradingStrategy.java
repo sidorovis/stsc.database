@@ -17,6 +17,9 @@ public final class OrmliteOptimizerTradingStrategy {
 	@DatabaseField(columnName = USER_ID_COLUMN_NAME, canBeNull = false, defaultValue = "0")
 	private int userId;
 
+	@DatabaseField(columnName = "experiment_internal_id", canBeNull = false)
+	private Integer experimentInternalId;
+
 	@DatabaseField(columnName = "period_from", dataType = DataType.DATE, canBeNull = false)
 	private Date periodFrom;
 
@@ -29,14 +32,26 @@ public final class OrmliteOptimizerTradingStrategy {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	public OrmliteOptimizerTradingStrategy() {
-		// this.userId = 0;
+	private OrmliteOptimizerTradingStrategy() {
 		this.periodFrom = new Date();
 		this.periodTo = new Date();
+	}
+	
+	public OrmliteOptimizerTradingStrategy(int experimentInternalId) {
+		this();
+		this.experimentInternalId = experimentInternalId;
 	}
 
 	public Integer getId() {
 		return id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public int getExperimentInternalId() {
+		return experimentInternalId;
 	}
 
 	public Date getPeriodFrom() {
