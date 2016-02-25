@@ -14,10 +14,10 @@ import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringDomen;
 import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 
-public class OrmliteOptimizerSubExecutionParameterTest {
+public class OrmliteOptimizerSubExecutionDomenTest {
 
 	@Test
 	public void testOrmliteOptimizerStringParameters() throws SQLException, LiquibaseException, IOException, URISyntaxException {
@@ -33,7 +33,7 @@ public class OrmliteOptimizerSubExecutionParameterTest {
 			execution.setAlgorithmName("SuperProfitableAlgo");
 			execution.setAlgorithmType("STOCK or EOD");
 			Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
-			final OrmliteOptimizerStringParameter stringParameter = new OrmliteOptimizerStringParameter(execution.getId());
+			final OrmliteOptimizerStringDomen stringParameter = new OrmliteOptimizerStringDomen(execution.getId());
 			stringParameter.setParameterName("parameterOfAlgorithmA");
 			stringParameter.setParameterDomen("parameter|domen");
 			Assert.assertEquals(1, storage.saveStringParameter(stringParameter).getNumLinesChanged());
@@ -41,7 +41,7 @@ public class OrmliteOptimizerSubExecutionParameterTest {
 		{
 			final OrmliteOptimizerExperiment experimentCopy = storage.loadExperiment(1);
 			final OrmliteOptimizerExecution executionCopy = storage.loadExecutions(experimentCopy).get(0);
-			final OrmliteOptimizerStringParameter copy = storage.loadStringParameters(executionCopy).get(0);
+			final OrmliteOptimizerStringDomen copy = storage.loadStringParameters(executionCopy).get(0);
 			Assert.assertEquals("parameterOfAlgorithmA", copy.getParameterName());
 			Assert.assertEquals("parameter|domen", copy.getParameterDomen());
 			Assert.assertNotNull(copy.getCreatedAt());

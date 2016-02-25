@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "sub_execution_parameters")
-public final class OrmliteOptimizerSubExecutionParameter {
+@DatabaseTable(tableName = "sub_execution_domens")
+public final class OrmliteOptimizerSubExecutionDomen {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -27,10 +27,10 @@ public final class OrmliteOptimizerSubExecutionParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerSubExecutionParameter() {
+	private OrmliteOptimizerSubExecutionDomen() {
 	}
 
-	public OrmliteOptimizerSubExecutionParameter(int executionId) {
+	public OrmliteOptimizerSubExecutionDomen(int executionId) {
 		this();
 		this.executionId = executionId;
 	}

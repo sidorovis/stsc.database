@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "string_parameters")
-public final class OrmliteOptimizerStringParameter {
+@DatabaseTable(tableName = "double_domens")
+public final class OrmliteOptimizerDoubleDomen {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -18,8 +18,14 @@ public final class OrmliteOptimizerStringParameter {
 	@DatabaseField(columnName = "parameter_name", canBeNull = false)
 	private String parameterName;
 
-	@DatabaseField(columnName = "parameter_domen", canBeNull = false)
-	private String parameterDomen;
+	@DatabaseField(columnName = "domen_from", canBeNull = false)
+	private Double from;
+
+	@DatabaseField(columnName = "domen_step", canBeNull = false)
+	private Double step;
+
+	@DatabaseField(columnName = "domen_to", canBeNull = false)
+	private Double to;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -27,10 +33,10 @@ public final class OrmliteOptimizerStringParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerStringParameter() {
+	private OrmliteOptimizerDoubleDomen() {
 	}
 
-	public OrmliteOptimizerStringParameter(int executionId) {
+	public OrmliteOptimizerDoubleDomen(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -47,12 +53,28 @@ public final class OrmliteOptimizerStringParameter {
 		this.parameterName = parameterName;
 	}
 
-	public String getParameterDomen() {
-		return parameterDomen;
+	public Double getFrom() {
+		return from;
 	}
 
-	public void setParameterDomen(String parameterDomen) {
-		this.parameterDomen = parameterDomen;
+	public void setFrom(Double from) {
+		this.from = from;
+	}
+
+	public Double getStep() {
+		return step;
+	}
+
+	public void setStep(Double step) {
+		this.step = step;
+	}
+
+	public Double getTo() {
+		return to;
+	}
+
+	public void setTo(Double to) {
+		this.to = to;
 	}
 
 	public Integer getExecutionId() {

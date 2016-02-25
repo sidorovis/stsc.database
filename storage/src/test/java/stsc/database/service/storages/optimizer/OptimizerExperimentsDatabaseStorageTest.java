@@ -12,12 +12,12 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleDomen;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerIntegerParameter;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringParameter;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerSubExecutionParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerIntegerDomen;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringDomen;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerSubExecutionDomen;
 
 public class OptimizerExperimentsDatabaseStorageTest {
 
@@ -31,24 +31,24 @@ public class OptimizerExperimentsDatabaseStorageTest {
 		execution.setAlgorithmType("execution type");
 		Assert.assertEquals(1, storage.saveExecution(execution).getNumLinesChanged());
 
-		final OrmliteOptimizerStringParameter stringParameter = new OrmliteOptimizerStringParameter(execution.getId());
+		final OrmliteOptimizerStringDomen stringParameter = new OrmliteOptimizerStringDomen(execution.getId());
 		stringParameter.setParameterDomen("the domen");
 		stringParameter.setParameterName("the name");
 		Assert.assertEquals(1, storage.saveStringParameter(stringParameter).getNumLinesChanged());
 
-		final OrmliteOptimizerSubExecutionParameter subExecutionParameter = new OrmliteOptimizerSubExecutionParameter(execution.getId());
+		final OrmliteOptimizerSubExecutionDomen subExecutionParameter = new OrmliteOptimizerSubExecutionDomen(execution.getId());
 		subExecutionParameter.setParameterDomen("the domen");
 		subExecutionParameter.setParameterName("the name");
 		Assert.assertEquals(1, storage.saveSubExecutionParameter(subExecutionParameter).getNumLinesChanged());
 
-		final OrmliteOptimizerIntegerParameter integerParameter = new OrmliteOptimizerIntegerParameter(execution.getId());
+		final OrmliteOptimizerIntegerDomen integerParameter = new OrmliteOptimizerIntegerDomen(execution.getId());
 		integerParameter.setParameterName("integer parameter");
 		integerParameter.setFrom(1);
 		integerParameter.setStep(2);
 		integerParameter.setTo(14);
 		Assert.assertEquals(1, storage.saveIntegerParameter(integerParameter).getNumLinesChanged());
 
-		final OrmliteOptimizerDoubleParameter doubleParameter = new OrmliteOptimizerDoubleParameter(execution.getId());
+		final OrmliteOptimizerDoubleDomen doubleParameter = new OrmliteOptimizerDoubleDomen(execution.getId());
 		doubleParameter.setParameterName("double parameter");
 		doubleParameter.setFrom(1.0);
 		doubleParameter.setStep(2.0);

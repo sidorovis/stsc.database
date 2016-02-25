@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "integer_parameters")
-public final class OrmliteOptimizerIntegerParameter {
+@DatabaseTable(tableName = "string_domens")
+public final class OrmliteOptimizerStringDomen {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -18,14 +18,8 @@ public final class OrmliteOptimizerIntegerParameter {
 	@DatabaseField(columnName = "parameter_name", canBeNull = false)
 	private String parameterName;
 
-	@DatabaseField(columnName = "domen_from", canBeNull = false)
-	private Integer from;
-
-	@DatabaseField(columnName = "domen_step", canBeNull = false)
-	private Integer step;
-
-	@DatabaseField(columnName = "domen_to", canBeNull = false)
-	private Integer to;
+	@DatabaseField(columnName = "parameter_domen", canBeNull = false)
+	private String parameterDomen;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -33,10 +27,10 @@ public final class OrmliteOptimizerIntegerParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerIntegerParameter() {
+	private OrmliteOptimizerStringDomen() {
 	}
 
-	public OrmliteOptimizerIntegerParameter(int executionId) {
+	public OrmliteOptimizerStringDomen(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -53,28 +47,12 @@ public final class OrmliteOptimizerIntegerParameter {
 		this.parameterName = parameterName;
 	}
 
-	public int getFrom() {
-		return from;
+	public String getParameterDomen() {
+		return parameterDomen;
 	}
 
-	public void setFrom(int from) {
-		this.from = from;
-	}
-
-	public int getStep() {
-		return step;
-	}
-
-	public void setStep(int step) {
-		this.step = step;
-	}
-
-	public int getTo() {
-		return to;
-	}
-
-	public void setTo(int to) {
-		this.to = to;
+	public void setParameterDomen(String parameterDomen) {
+		this.parameterDomen = parameterDomen;
 	}
 
 	public Integer getExecutionId() {

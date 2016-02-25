@@ -6,8 +6,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "double_parameters")
-public final class OrmliteOptimizerDoubleParameter {
+@DatabaseTable(tableName = "integer_domens")
+public final class OrmliteOptimizerIntegerDomen {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
 	private Integer id;
@@ -19,13 +19,13 @@ public final class OrmliteOptimizerDoubleParameter {
 	private String parameterName;
 
 	@DatabaseField(columnName = "domen_from", canBeNull = false)
-	private Double from;
+	private Integer from;
 
 	@DatabaseField(columnName = "domen_step", canBeNull = false)
-	private Double step;
+	private Integer step;
 
 	@DatabaseField(columnName = "domen_to", canBeNull = false)
-	private Double to;
+	private Integer to;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -33,10 +33,10 @@ public final class OrmliteOptimizerDoubleParameter {
 	@DatabaseField(columnName = "updated_at", dataType = DataType.DATE)
 	private Date updatedAt;
 
-	private OrmliteOptimizerDoubleParameter() {
+	private OrmliteOptimizerIntegerDomen() {
 	}
 
-	public OrmliteOptimizerDoubleParameter(int executionId) {
+	public OrmliteOptimizerIntegerDomen(int executionId) {
 		this();
 		this.executionId = executionId;
 	}
@@ -53,27 +53,27 @@ public final class OrmliteOptimizerDoubleParameter {
 		this.parameterName = parameterName;
 	}
 
-	public Double getFrom() {
+	public int getFrom() {
 		return from;
 	}
 
-	public void setFrom(Double from) {
+	public void setFrom(int from) {
 		this.from = from;
 	}
 
-	public Double getStep() {
+	public int getStep() {
 		return step;
 	}
 
-	public void setStep(Double step) {
+	public void setStep(int step) {
 		this.step = step;
 	}
 
-	public Double getTo() {
+	public int getTo() {
 		return to;
 	}
 
-	public void setTo(Double to) {
+	public void setTo(int to) {
 		this.to = to;
 	}
 

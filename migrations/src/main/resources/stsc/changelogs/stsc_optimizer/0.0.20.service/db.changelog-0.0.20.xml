@@ -81,7 +81,7 @@
 			baseTableName="executions" constraintName="fk_execution_to_experiment"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
 
-		<createTable tableName="string_parameters">
+		<createTable tableName="string_domens">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -99,10 +99,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_id"
-			baseTableName="string_parameters" constraintName="fk_string_parameter_to_execution"
+			baseTableName="string_domens" constraintName="fk_string_domen_to_execution"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
 
-		<createTable tableName="sub_execution_parameters">
+		<createTable tableName="sub_execution_domens">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -120,10 +120,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_id"
-			baseTableName="sub_execution_parameters" constraintName="fk_sub_execution_parameter_to_execution"
+			baseTableName="sub_execution_domens" constraintName="fk_sub_execution_domen_to_execution"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
 
-		<createTable tableName="integer_parameters">
+		<createTable tableName="integer_domens">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -147,10 +147,10 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_id"
-			baseTableName="integer_parameters" constraintName="fk_integer_parameter_to_execution"
+			baseTableName="integer_domens" constraintName="fk_integer_domen_to_execution"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
 
-		<createTable tableName="double_parameters">
+		<createTable tableName="double_domens">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -174,7 +174,7 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_id"
-			baseTableName="double_parameters" constraintName="fk_double_parameter_to_execution"
+			baseTableName="double_domens" constraintName="fk_double_domen_to_execution"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="executions" />
 
 	</changeSet>

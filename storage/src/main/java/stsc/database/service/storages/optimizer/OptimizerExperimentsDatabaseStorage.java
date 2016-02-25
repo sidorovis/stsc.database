@@ -14,13 +14,13 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerDoubleDomen;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExecution;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
 import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperimentLock;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerIntegerParameter;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringParameter;
-import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerSubExecutionParameter;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerIntegerDomen;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerStringDomen;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerSubExecutionDomen;
 
 public final class OptimizerExperimentsDatabaseStorage {
 
@@ -28,19 +28,19 @@ public final class OptimizerExperimentsDatabaseStorage {
 	private final Dao<OrmliteOptimizerExperimentLock, Integer> experimentLocks;
 
 	private final Dao<OrmliteOptimizerExecution, Integer> executions;
-	private final Dao<OrmliteOptimizerStringParameter, Integer> stringParameters;
-	private final Dao<OrmliteOptimizerSubExecutionParameter, Integer> subExecutionParameters;
-	private final Dao<OrmliteOptimizerIntegerParameter, Integer> integerParameters;
-	private final Dao<OrmliteOptimizerDoubleParameter, Integer> doubleParameters;
+	private final Dao<OrmliteOptimizerStringDomen, Integer> stringParameters;
+	private final Dao<OrmliteOptimizerSubExecutionDomen, Integer> subExecutionParameters;
+	private final Dao<OrmliteOptimizerIntegerDomen, Integer> integerParameters;
+	private final Dao<OrmliteOptimizerDoubleDomen, Integer> doubleParameters;
 
 	public OptimizerExperimentsDatabaseStorage(final ConnectionSource source) throws IOException, SQLException {
 		this.experiments = DaoManager.createDao(source, OrmliteOptimizerExperiment.class);
 		this.experimentLocks = DaoManager.createDao(source, OrmliteOptimizerExperimentLock.class);
 		this.executions = DaoManager.createDao(source, OrmliteOptimizerExecution.class);
-		this.stringParameters = DaoManager.createDao(source, OrmliteOptimizerStringParameter.class);
-		this.subExecutionParameters = DaoManager.createDao(source, OrmliteOptimizerSubExecutionParameter.class);
-		this.integerParameters = DaoManager.createDao(source, OrmliteOptimizerIntegerParameter.class);
-		this.doubleParameters = DaoManager.createDao(source, OrmliteOptimizerDoubleParameter.class);
+		this.stringParameters = DaoManager.createDao(source, OrmliteOptimizerStringDomen.class);
+		this.subExecutionParameters = DaoManager.createDao(source, OrmliteOptimizerSubExecutionDomen.class);
+		this.integerParameters = DaoManager.createDao(source, OrmliteOptimizerIntegerDomen.class);
+		this.doubleParameters = DaoManager.createDao(source, OrmliteOptimizerDoubleDomen.class);
 		Validate.isTrue(experiments.isTableExists(), "OrmliteOptimizerExperiments table should exists");
 		Validate.isTrue(experimentLocks.isTableExists(), "OrmliteOptimizerExperimentLocks table should exists");
 		Validate.isTrue(executions.isTableExists(), "OrmliteOptimizerExecutions table should exists");
@@ -122,43 +122,43 @@ public final class OptimizerExperimentsDatabaseStorage {
 		return queryBuilder.query();
 	}
 
-	public CreateOrUpdateStatus saveStringParameter(OrmliteOptimizerStringParameter newStringParameter) throws SQLException {
+	public CreateOrUpdateStatus saveStringParameter(OrmliteOptimizerStringDomen newStringParameter) throws SQLException {
 		newStringParameter.setCreatedAt();
 		newStringParameter.setUpdatedAt();
 		return stringParameters.createOrUpdate(newStringParameter);
 	}
 
-	public List<OrmliteOptimizerStringParameter> loadStringParameters(OrmliteOptimizerExecution execution) throws SQLException {
+	public List<OrmliteOptimizerStringDomen> loadStringParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return stringParameters.queryForEq("execution_id", execution.getId());
 	}
 
-	public CreateOrUpdateStatus saveSubExecutionParameter(OrmliteOptimizerSubExecutionParameter newSubExecutionParameter) throws SQLException {
+	public CreateOrUpdateStatus saveSubExecutionParameter(OrmliteOptimizerSubExecutionDomen newSubExecutionParameter) throws SQLException {
 		newSubExecutionParameter.setCreatedAt();
 		newSubExecutionParameter.setUpdatedAt();
 		return subExecutionParameters.createOrUpdate(newSubExecutionParameter);
 	}
 
-	public List<OrmliteOptimizerSubExecutionParameter> loadSubExecutionParameters(OrmliteOptimizerExecution execution) throws SQLException {
+	public List<OrmliteOptimizerSubExecutionDomen> loadSubExecutionParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return subExecutionParameters.queryForEq("execution_id", execution.getId());
 	}
 
-	public CreateOrUpdateStatus saveIntegerParameter(OrmliteOptimizerIntegerParameter newIntegerParameter) throws SQLException {
+	public CreateOrUpdateStatus saveIntegerParameter(OrmliteOptimizerIntegerDomen newIntegerParameter) throws SQLException {
 		newIntegerParameter.setCreatedAt();
 		newIntegerParameter.setUpdatedAt();
 		return integerParameters.createOrUpdate(newIntegerParameter);
 	}
 
-	public List<OrmliteOptimizerIntegerParameter> loadIntegerParameters(OrmliteOptimizerExecution execution) throws SQLException {
+	public List<OrmliteOptimizerIntegerDomen> loadIntegerParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return integerParameters.queryForEq("execution_id", execution.getId());
 	}
 
-	public CreateOrUpdateStatus saveDoubleParameter(OrmliteOptimizerDoubleParameter newDoubleParameter) throws SQLException {
+	public CreateOrUpdateStatus saveDoubleParameter(OrmliteOptimizerDoubleDomen newDoubleParameter) throws SQLException {
 		newDoubleParameter.setCreatedAt();
 		newDoubleParameter.setUpdatedAt();
 		return doubleParameters.createOrUpdate(newDoubleParameter);
 	}
 
-	public List<OrmliteOptimizerDoubleParameter> loadDoubleParameters(OrmliteOptimizerExecution execution) throws SQLException {
+	public List<OrmliteOptimizerDoubleDomen> loadDoubleParameters(OrmliteOptimizerExecution execution) throws SQLException {
 		return doubleParameters.queryForEq("execution_id", execution.getId());
 	}
 
