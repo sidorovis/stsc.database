@@ -8,11 +8,6 @@ import org.junit.Test;
 
 public final class FeedzillaDownloaderConfigTest {
 
-	// @Test
-	// public void getChangeLogFileTest() throws URISyntaxException {
-	// Assert.assertEquals(StscOptimizerConfig.class.getResource("db.changelog.xml").toURI().getRawPath(), new StscOptimizerConfig().getChangeLogFile());
-	// }
-
 	@Test
 	public void getConfigFilesTest() throws URISyntaxException {
 		final FeedzillaDownloaderConfig soc = new FeedzillaDownloaderConfig();

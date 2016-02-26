@@ -8,15 +8,10 @@ import org.junit.Test;
 
 public final class YahooDownloaderConfigTest {
 
-	// @Test
-	// public void getChangeLogFileTest() throws URISyntaxException {
-	// Assert.assertEquals(StscOptimizerConfig.class.getResource("db.changelog.xml").toURI().getRawPath(), new StscOptimizerConfig().getChangeLogFile());
-	// }
-
 	@Test
 	public void getConfigFilesTest() throws URISyntaxException {
 		final YahooDownloaderConfig soc = new YahooDownloaderConfig();
-		Assert.assertTrue(new File(soc.getTestConfigFile()).exists());
+		Assert.assertNotNull(soc.getTestConfigFile());
 		Assert.assertTrue(new File(soc.getDevelopmentConfigFile()).exists());
 		Assert.assertTrue(new File(soc.getProductionConfigFile()).exists());
 	}

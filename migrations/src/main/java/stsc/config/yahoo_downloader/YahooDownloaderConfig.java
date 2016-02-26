@@ -1,5 +1,6 @@
 ﻿package stsc.config.yahoo_downloader;
 
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -7,8 +8,8 @@ import java.net.URISyntaxException;
  */
 public final class YahooDownloaderConfig {
 
-	public final String getTestConfigFile() throws URISyntaxException {
-		return YahooDownloaderConfig.class.getResource("test.properties").toURI().getRawPath();
+	public final InputStream getTestConfigFile() throws URISyntaxException {
+		return YahooDownloaderConfig.class.getResourceAsStream("test.properties");
 	}
 
 	public final String getDevelopmentConfigFile() throws URISyntaxException {

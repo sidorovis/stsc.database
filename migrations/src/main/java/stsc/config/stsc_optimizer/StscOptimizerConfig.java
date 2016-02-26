@@ -1,5 +1,6 @@
 ﻿package stsc.config.stsc_optimizer;
 
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -7,8 +8,8 @@ import java.net.URISyntaxException;
  */
 public final class StscOptimizerConfig {
 
-	public final String getTestConfigFile() throws URISyntaxException {
-		return StscOptimizerConfig.class.getResource("test.properties").toURI().getRawPath();
+	public final InputStream getTestConfigFile() throws URISyntaxException {
+		return StscOptimizerConfig.class.getResourceAsStream("test.properties");
 	}
 
 	public final String getDevelopmentConfigFile() throws URISyntaxException {
