@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 
-import liquibase.exception.LiquibaseException;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import liquibase.exception.LiquibaseException;
 
 public class FeedzillaDatabaseSettingsTest {
 

@@ -1,7 +1,6 @@
 package stsc.database.migrations;
 
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +15,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
-import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import stsc.changelogs.yahoo_downloader.YahooDownloaderChangelog;
 import stsc.config.yahoo_downloader.YahooDownloaderConfig;
 
@@ -73,9 +72,11 @@ public final class YahooDownloaderDatabaseSettings {
 	public YahooDownloaderDatabaseSettings migrate() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
-		final Liquibase liquibase = new Liquibase(YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
-				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+
+		final ClassLoaderResourceAccessor resourceAccesor = new ClassLoaderResourceAccessor();
+		final String packagePath = YAHOO_DOWNLOADER_CHANGELOG.getClass().getPackage().getName().replace('.', '/');
+		final Liquibase liquibase = new Liquibase(packagePath + "/" + YAHOO_DOWNLOADER_CHANGELOG.getDbChangelogName(), resourceAccesor, database);
+
 		liquibase.update((String) null);
 		liquibase.validate();
 		database.commit();
@@ -87,9 +88,9 @@ public final class YahooDownloaderDatabaseSettings {
 	public YahooDownloaderDatabaseSettings dropAll() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().getParent().toFile();
-		final Liquibase liquibase = new Liquibase(YAHOO_DOWNLOADER_CHANGELOG.getDbChangelog().toString(),
-				new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final ClassLoaderResourceAccessor resourceAccesor = new ClassLoaderResourceAccessor();
+		final String packagePath = YAHOO_DOWNLOADER_CHANGELOG.getClass().getPackage().getName().replace('.', '/');
+		final Liquibase liquibase = new Liquibase(packagePath + "/" + YAHOO_DOWNLOADER_CHANGELOG.getDbChangelogName(), resourceAccesor, database);
 		liquibase.dropAll();
 		liquibase.validate();
 		database.commit();

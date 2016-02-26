@@ -9,7 +9,7 @@ public final class StscOptimizerChangelogTest {
 
 	@Test
 	public void stscOptimizerChangelogTest() throws URISyntaxException {
-		Assert.assertTrue(new StscOptimizerChangelog().getDbChangelog().toFile().exists());
+		Assert.assertNotNull(new StscOptimizerChangelog().getDbChangelogName());
 	}
 
 }

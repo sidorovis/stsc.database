@@ -9,7 +9,7 @@ public final class FeedzillaDownloaderChangelogTest {
 
 	@Test
 	public void feedzillaDownloaderChangelogTest() throws URISyntaxException {
-		Assert.assertTrue(new FeedzillaDownloaderChangelog().getDbChangelog().toFile().exists());
+		Assert.assertNotNull(new FeedzillaDownloaderChangelog().getDbChangelogName());
 	}
 
 }

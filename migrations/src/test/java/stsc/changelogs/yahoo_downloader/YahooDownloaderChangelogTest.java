@@ -9,7 +9,7 @@ public final class YahooDownloaderChangelogTest {
 
 	@Test
 	public void yahooDownloaderChangelogTest() throws URISyntaxException {
-		Assert.assertTrue(new YahooDownloaderChangelog().getDbChangelog().toFile().exists());
+		Assert.assertNotNull(new YahooDownloaderChangelog().getDbChangelogName());
 	}
 
 }

@@ -1,7 +1,6 @@
 package stsc.database.migrations.optimizer;
 
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +15,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
-import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import stsc.changelogs.stsc_optimizer.StscOptimizerChangelog;
 import stsc.config.stsc_optimizer.StscOptimizerConfig;
 
@@ -73,8 +72,9 @@ public final class OptimizerDatabaseSettings {
 	public OptimizerDatabaseSettings migrate() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = STSC_OPTIMIZER_CHANGELOG.getDbChangelog().getParent().toFile();
-		final Liquibase liquibase = new Liquibase(STSC_OPTIMIZER_CHANGELOG.getDbChangelog().toString(), new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final ClassLoaderResourceAccessor resourceAccesor = new ClassLoaderResourceAccessor();
+		final String packagePath = STSC_OPTIMIZER_CHANGELOG.getClass().getPackage().getName().replace('.', '/');
+		final Liquibase liquibase = new Liquibase(packagePath + "/" + STSC_OPTIMIZER_CHANGELOG.getDbChangelogName(), resourceAccesor, database);
 		liquibase.update((String) null);
 		liquibase.validate();
 		database.commit();
@@ -86,8 +86,9 @@ public final class OptimizerDatabaseSettings {
 	public OptimizerDatabaseSettings dropAll() throws SQLException, LiquibaseException, URISyntaxException {
 		final Connection c = DriverManager.getConnection(jdbcUrl);
 		final Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
-		final File parentPath = STSC_OPTIMIZER_CHANGELOG.getDbChangelog().getParent().toFile();
-		final Liquibase liquibase = new Liquibase(STSC_OPTIMIZER_CHANGELOG.getDbChangelog().toString(), new FileSystemResourceAccessor(parentPath.getAbsolutePath()), database);
+		final ClassLoaderResourceAccessor resourceAccesor = new ClassLoaderResourceAccessor();
+		final String packagePath = STSC_OPTIMIZER_CHANGELOG.getClass().getPackage().getName().replace('.', '/');
+		final Liquibase liquibase = new Liquibase(packagePath + "/" + STSC_OPTIMIZER_CHANGELOG.getDbChangelogName(), resourceAccesor, database);
 		liquibase.dropAll();
 		liquibase.validate();
 		database.commit();

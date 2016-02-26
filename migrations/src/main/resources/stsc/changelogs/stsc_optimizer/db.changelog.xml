@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
 		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<include file="0.0.20.service/db.changelog-0.0.20.xml" />
+	<include file="stsc/changelogs/stsc_optimizer/0.0.20.service/db.changelog-0.0.20.xml" />
 
-	<include file="0.0.20.service/db.changelog-0.0.20.1.xml" />
+	<include file="stsc/changelogs/stsc_optimizer/0.0.20.service/db.changelog-0.0.20.1.xml" />
 
-	<include file="0.0.20.service/db.changelog-0.0.20.2.xml" />
+	<include file="stsc/changelogs/stsc_optimizer/0.0.20.service/db.changelog-0.0.20.2.xml" />
 
 </databaseChangeLog> 

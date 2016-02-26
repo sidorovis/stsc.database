@@ -1,5 +1,6 @@
 ﻿package stsc.config.feedzilla_downloader;
 
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -7,8 +8,8 @@ import java.net.URISyntaxException;
  */
 public final class FeedzillaDownloaderConfig {
 
-	public final String getTestConfigFile() throws URISyntaxException {
-		return FeedzillaDownloaderConfig.class.getResource("test.properties").toURI().getRawPath();
+	public final InputStream getTestConfigFile() throws URISyntaxException {
+		return FeedzillaDownloaderConfig.class.getResourceAsStream("test.properties");
 	}
 
 	public final String getDevelopmentConfigFile() throws URISyntaxException {
