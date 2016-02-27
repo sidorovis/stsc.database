@@ -1,4 +1,4 @@
-﻿package stsc.config.feedzilla_downloader;
+package stsc.config.feedzilla_downloader;
 
 import java.io.File;
 import java.net.URISyntaxException;
