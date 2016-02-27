@@ -1,4 +1,4 @@
-﻿package stsc.config.stsc_optimizer;
+package stsc.config.stsc_optimizer;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;

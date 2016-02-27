@@ -1,4 +1,4 @@
-﻿package stsc.config.yahoo_downloader;
+package stsc.config.yahoo_downloader;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
