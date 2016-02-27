@@ -1,9 +1,9 @@
 language: java
 jdk:
   - oraclejdk8
-before_install:
-  - cd migrations
-  - mvn resources:resources liquibase:update -Pyahoo.test
-  - mvn resources:resources liquibase:update -Pfeedzilla.test
-  - mvn resources:resources liquibase:update -Pstsc_optimizer.test
-  - cd ../
+#before_install:
+#  - cd migrations
+#  - mvn resources:resources liquibase:update -Pyahoo.test
+#  - mvn resources:resources liquibase:update -Pfeedzilla.test
+#  - mvn resources:resources liquibase:update -Pstsc_optimizer.test
+#  - cd ../
