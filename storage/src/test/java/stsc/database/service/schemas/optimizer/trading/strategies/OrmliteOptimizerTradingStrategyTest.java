@@ -12,6 +12,8 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import liquibase.exception.LiquibaseException;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
+import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
 public class OrmliteOptimizerTradingStrategyTest {
@@ -21,15 +23,19 @@ public class OrmliteOptimizerTradingStrategyTest {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);
+		final OptimizerExperimentsDatabaseStorage experimentsDatabaseStorage = new OptimizerExperimentsDatabaseStorage(source);
+		final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
+		Assert.assertEquals(1, experimentsDatabaseStorage.saveExperiment(experiment).getNumLinesChanged());
 		Assert.assertNotNull(storage);
 		{
-			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(0);
+			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(experiment.getId());
 			Assert.assertEquals(1, storage.saveTradingStrategy(tradingStrategy).getNumLinesChanged());
 		}
 		{
 			final OrmliteOptimizerTradingStrategy copy = storage.loadTradingStrategy(1);
 			Assert.assertNotNull(copy.getPeriodFrom());
 			Assert.assertNotNull(copy.getPeriodTo());
+			Assert.assertNotNull(copy.getExperimentId());
 			Assert.assertNotNull(copy.getCreatedAt());
 			Assert.assertNotNull(copy.getUpdatedAt());
 		}

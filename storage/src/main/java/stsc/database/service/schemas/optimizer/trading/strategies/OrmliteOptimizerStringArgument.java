@@ -15,11 +15,11 @@ public final class OrmliteOptimizerStringArgument {
 	@DatabaseField(columnName = "execution_instance_id", canBeNull = false)
 	private int executionInstanceId;
 
-	@DatabaseField(columnName = "parameter_name", canBeNull = false)
-	private String parameterName;
+	@DatabaseField(columnName = "string_domen_id", canBeNull = false)
+	private Integer stringDomenId;
 
-	@DatabaseField(columnName = "parameter_value", canBeNull = false)
-	private String parameterValue;
+	@DatabaseField(columnName = "argument_index", canBeNull = false)
+	private Integer argumentIndex;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -40,20 +40,20 @@ public final class OrmliteOptimizerStringArgument {
 		return id;
 	}
 
-	public String getParameterName() {
-		return parameterName;
+	public int getStringDomenId() {
+		return stringDomenId;
 	}
 
-	public void setParameterName(String parameterName) {
-		this.parameterName = parameterName;
+	public void setStringDomenId(int stringDomenId) {
+		this.stringDomenId = stringDomenId;
 	}
 
-	public String getParameterValue() {
-		return parameterValue;
+	public int getArgumentIndex() {
+		return argumentIndex;
 	}
 
-	public void setParameterValue(String parameterValue) {
-		this.parameterValue = parameterValue;
+	public void setArgumentIndex(int argumentIndex) {
+		this.argumentIndex = argumentIndex;
 	}
 
 	public int getExecutionInstanceId() {

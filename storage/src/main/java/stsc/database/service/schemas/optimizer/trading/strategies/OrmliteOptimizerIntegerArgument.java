@@ -15,11 +15,11 @@ public final class OrmliteOptimizerIntegerArgument {
 	@DatabaseField(columnName = "execution_instance_id", canBeNull = false)
 	private int executionInstanceId;
 
-	@DatabaseField(columnName = "parameter_name", canBeNull = false)
-	private String parameterName;
+	@DatabaseField(columnName = "integer_domen_id", canBeNull = false)
+	private Integer integerDomenId;
 
-	@DatabaseField(columnName = "parameter_value", canBeNull = false)
-	private Integer parameterValue;
+	@DatabaseField(columnName = "argument_index", canBeNull = false)
+	private Integer argumentIndex;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -40,20 +40,20 @@ public final class OrmliteOptimizerIntegerArgument {
 		return id;
 	}
 
-	public String getParameterName() {
-		return parameterName;
+	public int getIntegerDomenId() {
+		return integerDomenId;
 	}
 
-	public void setParameterName(String parameterName) {
-		this.parameterName = parameterName;
+	public void setIntegerDomenId(int integerDomenId) {
+		this.integerDomenId = integerDomenId;
 	}
 
-	public int getParameterValue() {
-		return parameterValue;
+	public int getArgumentIndex() {
+		return argumentIndex;
 	}
 
-	public void setParameterValue(int parameterValue) {
-		this.parameterValue = parameterValue;
+	public void setArgumentIndex(int argumentIndex) {
+		this.argumentIndex = argumentIndex;
 	}
 
 	public int getExecutionInstanceId() {

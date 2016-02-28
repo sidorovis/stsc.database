@@ -15,7 +15,7 @@
 			<column name="user_id" type="int(11)" defaultValueNumeric="0">
 				<constraints nullable="false" />
 			</column>
-			<column name="experiment_internal_id" type="int(11)" defaultValueNumeric="0">
+			<column name="experiment_id" type="int(11)" defaultValueNumeric="0">
 				<constraints nullable="false" />
 			</column>
 			<column name="period_from" type="DATETIME" >
@@ -28,6 +28,10 @@
 			<column name="created_at" type="DATETIME" />
 			<column name="updated_at" type="DATETIME" />
 		</createTable>
+
+		<addForeignKeyConstraint baseColumnNames="experiment_id"
+			baseTableName="trading_strategies" constraintName="fk_trading_strategy_to_experiment"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="experiments" />
 
 		<createTable tableName="execution_instances">
 			<column name="id" type="int(11)" autoIncrement="true">
@@ -63,10 +67,10 @@
 			<column name="execution_instance_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_name" type="varchar(255)">
+			<column name="string_domen_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_value" type="clob">
+			<column name="argument_index" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -77,14 +81,21 @@
 			baseTableName="string_arguments" constraintName="fk_string_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
-		<createTable tableName="subexecution_arguments">
+		<addForeignKeyConstraint baseColumnNames="string_domen_id"
+			baseTableName="string_arguments" constraintName="fk_string_argument_to_string_domen"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="string_domens" />
+
+		<createTable tableName="sub_execution_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="execution_instance_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="subexecution_name" type="varchar(512)">
+			<column name="sub_execution_domen_id" type="int(11)">
+				<constraints nullable="false" />
+			</column>
+			<column name="argument_index" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -92,8 +103,12 @@
 		</createTable>
 
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
-			baseTableName="subexecution_arguments" constraintName="fk_subexecution_argument_to_execution_instance"
+			baseTableName="sub_execution_arguments" constraintName="fk_sub_execution_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+		<addForeignKeyConstraint baseColumnNames="sub_execution_domen_id"
+			baseTableName="sub_execution_arguments" constraintName="fk_sub_execution_argument_to_sub_execution_domen"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="sub_execution_domens" />
 
 		<createTable tableName="integer_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
@@ -102,10 +117,10 @@
 			<column name="execution_instance_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_name" type="varchar(255)">
+			<column name="integer_domen_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_value" type="int(11)">
+			<column name="argument_index" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -116,6 +131,10 @@
 			baseTableName="integer_arguments" constraintName="fk_integer_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
 
+		<addForeignKeyConstraint baseColumnNames="integer_domen_id"
+			baseTableName="integer_arguments" constraintName="fk_integer_argument_to_integer_domen"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="integer_domens" />
+
 		<createTable tableName="double_arguments">
 			<column name="id" type="int(11)" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
@@ -123,10 +142,10 @@
 			<column name="execution_instance_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_name" type="varchar(255)">
+			<column name="double_domen_id" type="int(11)">
 				<constraints nullable="false" />
 			</column>
-			<column name="parameter_value" type="double">
+			<column name="argument_index" type="int(11)">
 				<constraints nullable="false" />
 			</column>
 			<column name="created_at" type="DATETIME" />
@@ -136,6 +155,10 @@
 		<addForeignKeyConstraint baseColumnNames="execution_instance_id"
 			baseTableName="double_arguments" constraintName="fk_double_argument_to_execution_instance"
 			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="execution_instances" />
+
+		<addForeignKeyConstraint baseColumnNames="double_domen_id"
+			baseTableName="double_arguments" constraintName="fk_double_argument_to_double_domen"
+			onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="double_domens" />
 
 	</changeSet>
 

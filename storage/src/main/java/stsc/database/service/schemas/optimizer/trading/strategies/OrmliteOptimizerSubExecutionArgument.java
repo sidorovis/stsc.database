@@ -6,7 +6,7 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "subexecution_arguments")
+@DatabaseTable(tableName = "sub_execution_arguments")
 public final class OrmliteOptimizerSubExecutionArgument {
 
 	@DatabaseField(generatedId = true, columnName = "id", canBeNull = false)
@@ -15,8 +15,11 @@ public final class OrmliteOptimizerSubExecutionArgument {
 	@DatabaseField(columnName = "execution_instance_id", canBeNull = false)
 	private int executionInstanceId;
 
-	@DatabaseField(columnName = "subexecution_name", canBeNull = false)
-	private String subExecutionName;
+	@DatabaseField(columnName = "sub_execution_domen_id", canBeNull = false)
+	private Integer subExecutionDomenId;
+
+	@DatabaseField(columnName = "argument_index", canBeNull = false)
+	private Integer argumentIndex;
 
 	@DatabaseField(columnName = "created_at", dataType = DataType.DATE)
 	private Date createdAt;
@@ -41,12 +44,20 @@ public final class OrmliteOptimizerSubExecutionArgument {
 		return executionInstanceId;
 	}
 
-	public String getSubExecutionName() {
-		return subExecutionName;
+	public int getSubExecutionDomenId() {
+		return subExecutionDomenId;
 	}
 
-	public void setSubExecutionName(String subExecutionName) {
-		this.subExecutionName = subExecutionName;
+	public void setSubExecutionDomenId(int subExecutionDomenId) {
+		this.subExecutionDomenId = subExecutionDomenId;
+	}
+
+	public int getArgumentIndex() {
+		return argumentIndex;
+	}
+
+	public void setArgumentIndex(int argumentIndex) {
+		this.argumentIndex = argumentIndex;
 	}
 
 	public void setCreatedAt() {

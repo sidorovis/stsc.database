@@ -13,6 +13,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import liquibase.exception.LiquibaseException;
 import stsc.common.Settings;
 import stsc.database.migrations.optimizer.OptimizerDatabaseSettings;
+import stsc.database.service.schemas.optimizer.experiments.OrmliteOptimizerExperiment;
+import stsc.database.service.storages.optimizer.OptimizerExperimentsDatabaseStorage;
 import stsc.database.service.storages.optimizer.OptimizerTradingStrategiesDatabaseStorage;
 
 public class OrmliteOptimizerDoubleMetricTest {
@@ -22,9 +24,12 @@ public class OrmliteOptimizerDoubleMetricTest {
 		final OptimizerDatabaseSettings settings = OptimizerDatabaseSettings.test().dropAll().migrate();
 		final ConnectionSource source = new JdbcConnectionSource(settings.getJdbcUrl(), settings.getLogin(), settings.getPassword());
 		final OptimizerTradingStrategiesDatabaseStorage storage = new OptimizerTradingStrategiesDatabaseStorage(source);
+		final OptimizerExperimentsDatabaseStorage experimentsDatabaseStorage = new OptimizerExperimentsDatabaseStorage(source);
+		final OrmliteOptimizerExperiment experiment = new OrmliteOptimizerExperiment("optimizer", "description for optimization experiment");
+		Assert.assertEquals(1, experimentsDatabaseStorage.saveExperiment(experiment).getNumLinesChanged());
 		Assert.assertNotNull(storage);
 		{
-			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(0);
+			final OrmliteOptimizerTradingStrategy tradingStrategy = new OrmliteOptimizerTradingStrategy(experiment.getId());
 			Assert.assertEquals(1, storage.saveTradingStrategy(tradingStrategy).getNumLinesChanged());
 
 			final OrmliteOptimizerMetricsTuple metricsTuple = new OrmliteOptimizerMetricsTuple(tradingStrategy.getId());
